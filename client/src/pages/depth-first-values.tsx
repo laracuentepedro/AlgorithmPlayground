@@ -56,12 +56,12 @@ export function DepthFirstValuesPlayground() {
     stack: (string | number)[] = []
   ): string => {
     if (structure.length === 0 || structure[0] === null) {
-      return '<div class="text-center text-slate-500">Empty Tree</div>';
+      return '<div class="text-center text-slate-500 py-8">Empty Tree</div>';
     }
 
     // Helper function to get node display
-    const getNodeDisplay = (index: number, value: string | number | null): string => {
-      if (value === null) return '';
+    const getNodeDisplay = (index: number, value: string | number | null, position: string = ''): string => {
+      if (value === null) return '<div class="w-16 h-16"></div>';
       
       let nodeClass = 'bg-white border-slate-300';
       let label = '';
@@ -77,50 +77,163 @@ export function DepthFirstValuesPlayground() {
         label = '<div class="text-xs text-yellow-600 text-center mb-1">in stack</div>';
       }
       
-      return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold text-sm">${value}</span></div>`;
+      return `
+        <div class="flex flex-col items-center relative ${position}">
+          ${label}
+          <div class="w-16 h-16 rounded-full border-3 ${nodeClass} flex items-center justify-center font-mono font-bold text-lg shadow-sm">
+            ${value}
+          </div>
+        </div>
+      `;
     };
 
-    // Create a simple tree visualization for small trees
-    if (structure.length <= 7) {
-      const nodes = [];
+    // Helper function to create connecting lines
+    const createConnection = (type: 'left' | 'right'): string => {
+      const isLeft = type === 'left';
+      return `
+        <div class="absolute ${isLeft ? 'left-8' : 'right-8'} top-16 w-8 h-8 flex items-center justify-center">
+          <div class="w-full h-0.5 bg-slate-400"></div>
+          <div class="absolute ${isLeft ? 'left-full' : 'right-full'} top-0 w-0.5 h-8 bg-slate-400"></div>
+        </div>
+      `;
+    };
+
+    // Create enhanced tree visualization
+    if (structure.length <= 15) {
+      let html = '<div class="relative py-8">';
       
       // Level 0 (root)
       if (structure[0] !== null) {
-        nodes.push(`<div class="flex justify-center mb-4">${getNodeDisplay(0, structure[0])}</div>`);
+        html += `
+          <div class="flex justify-center mb-16 relative">
+            ${getNodeDisplay(0, structure[0])}
+        `;
+        
+        // Add connections to children if they exist
+        if ((structure.length > 1 && structure[1] !== null) || (structure.length > 2 && structure[2] !== null)) {
+          html += `
+            <div class="absolute top-16 left-1/2 transform -translate-x-1/2">
+              <div class="w-0.5 h-8 bg-slate-400"></div>
+            </div>
+          `;
+          
+          if (structure.length > 1 && structure[1] !== null) {
+            html += `
+              <div class="absolute top-24 left-1/2 transform -translate-x-1/2 -translate-x-16">
+                <div class="w-16 h-0.5 bg-slate-400"></div>
+              </div>
+            `;
+          }
+          
+          if (structure.length > 2 && structure[2] !== null) {
+            html += `
+              <div class="absolute top-24 left-1/2 transform -translate-x-1/2 translate-x-16">
+                <div class="w-16 h-0.5 bg-slate-400"></div>
+              </div>
+            `;
+          }
+        }
+        
+        html += '</div>';
       }
       
       // Level 1
-      const level1 = [];
-      if (structure.length > 1 && structure[1] !== null) level1.push(getNodeDisplay(1, structure[1]));
-      else level1.push('<div class="w-16"></div>');
-      if (structure.length > 2 && structure[2] !== null) level1.push(getNodeDisplay(2, structure[2]));
-      else level1.push('<div class="w-16"></div>');
-      
-      if (level1.some(node => node !== '<div class="w-16"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-8 mb-4">${level1.join('')}</div>`);
+      if (structure.length > 1 || structure.length > 2) {
+        html += '<div class="flex justify-center items-start space-x-32 mb-16 relative">';
+        
+        // Left child
+        if (structure.length > 1) {
+          html += getNodeDisplay(1, structure[1], 'relative');
+          
+          // Connections to level 2 children
+          if (structure.length > 3 || structure.length > 4) {
+            if (structure[1] !== null && ((structure.length > 3 && structure[3] !== null) || (structure.length > 4 && structure[4] !== null))) {
+              html += `
+                <div class="absolute top-16 left-8 transform -translate-x-1/2">
+                  <div class="w-0.5 h-8 bg-slate-400"></div>
+                </div>
+              `;
+              
+              if (structure.length > 3 && structure[3] !== null) {
+                html += `
+                  <div class="absolute top-24 left-8 transform -translate-x-1/2 -translate-x-8">
+                    <div class="w-8 h-0.5 bg-slate-400"></div>
+                  </div>
+                `;
+              }
+              
+              if (structure.length > 4 && structure[4] !== null) {
+                html += `
+                  <div class="absolute top-24 left-8 transform -translate-x-1/2 translate-x-8">
+                    <div class="w-8 h-0.5 bg-slate-400"></div>
+                  </div>
+                `;
+              }
+            }
+          }
+        } else {
+          html += '<div class="w-16 h-16"></div>';
+        }
+        
+        // Right child
+        if (structure.length > 2) {
+          html += getNodeDisplay(2, structure[2], 'relative');
+          
+          // Connections to level 2 children
+          if (structure.length > 5 || structure.length > 6) {
+            if (structure[2] !== null && ((structure.length > 5 && structure[5] !== null) || (structure.length > 6 && structure[6] !== null))) {
+              html += `
+                <div class="absolute top-16 right-8 transform translate-x-1/2">
+                  <div class="w-0.5 h-8 bg-slate-400"></div>
+                </div>
+              `;
+              
+              if (structure.length > 5 && structure[5] !== null) {
+                html += `
+                  <div class="absolute top-24 right-8 transform translate-x-1/2 -translate-x-8">
+                    <div class="w-8 h-0.5 bg-slate-400"></div>
+                  </div>
+                `;
+              }
+              
+              if (structure.length > 6 && structure[6] !== null) {
+                html += `
+                  <div class="absolute top-24 right-8 transform translate-x-1/2 translate-x-8">
+                    <div class="w-8 h-0.5 bg-slate-400"></div>
+                  </div>
+                `;
+              }
+            }
+          }
+        } else {
+          html += '<div class="w-16 h-16"></div>';
+        }
+        
+        html += '</div>';
       }
       
       // Level 2
-      const level2 = [];
-      for (let i = 3; i < 7 && i < structure.length; i++) {
-        if (structure[i] !== null) level2.push(getNodeDisplay(i, structure[i]));
-        else level2.push('<div class="w-12"></div>');
+      if (structure.length > 3) {
+        html += '<div class="flex justify-center items-start space-x-16 mb-8">';
+        
+        for (let i = 3; i < Math.min(7, structure.length); i++) {
+          html += getNodeDisplay(i, structure[i]);
+        }
+        
+        html += '</div>';
       }
       
-      if (level2.some(node => node !== '<div class="w-12"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-4 mb-4">${level2.join('')}</div>`);
-      }
-      
-      return `<div class="tree-visualization">${nodes.join('')}</div>`;
+      html += '</div>';
+      return html;
     }
     
-    // For larger trees, show a simplified list view
+    // For larger trees, show a simplified horizontal layout
     const nodesList = structure
       .map((val, idx) => val !== null ? getNodeDisplay(idx, val) : '')
       .filter(node => node !== '')
       .join(' ');
     
-    return `<div class="flex flex-wrap justify-center gap-2">${nodesList}</div>`;
+    return `<div class="flex flex-wrap justify-center gap-4 py-4">${nodesList}</div>`;
   };
 
   const buildTreeFromArray = (arr: (string | number | null)[]): TreeNode | null => {
@@ -580,6 +693,44 @@ export function DepthFirstValuesPlayground() {
               </div>
             </div>
 
+            {/* Tree Building Explainer */}
+            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="font-semibold text-blue-800 mb-3 flex items-center">
+                <i className="fas fa-info-circle mr-2"></i>
+                How to Build Binary Trees from Arrays
+              </h4>
+              <div className="text-sm text-blue-700 space-y-2">
+                <p>Arrays represent trees in <strong>level-order</strong> (breadth-first) format:</p>
+                <ul className="list-disc list-inside space-y-1 ml-4">
+                  <li><strong>Index 0:</strong> Root node</li>
+                  <li><strong>Index 1:</strong> Left child of root</li>
+                  <li><strong>Index 2:</strong> Right child of root</li>
+                  <li><strong>Index 3:</strong> Left child of node at index 1</li>
+                  <li><strong>Index 4:</strong> Right child of node at index 1</li>
+                  <li><strong>Index 5:</strong> Left child of node at index 2</li>
+                  <li><strong>Index 6:</strong> Right child of node at index 2</li>
+                </ul>
+                <p className="mt-3">
+                  <strong>Formula:</strong> For node at index <em>i</em>, left child is at <em>2i+1</em>, right child is at <em>2i+2</em>
+                </p>
+                <p>Use <code className="bg-blue-100 px-1 rounded">"null"</code> to represent missing nodes and maintain proper tree structure.</p>
+              </div>
+            </div>
+
+            {/* Live Tree Preview */}
+            {inputStructure && (
+              <div className="mb-6">
+                <h4 className="text-sm font-medium text-slate-700 mb-3">Live Tree Preview</h4>
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                  <div 
+                    dangerouslySetInnerHTML={{ 
+                      __html: createTreeVisualization(parseStructure(inputStructure)) 
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="flex items-center space-x-4 mb-6">
               <Button
                 onClick={runAlgorithm}
@@ -741,20 +892,31 @@ export function DepthFirstValuesPlayground() {
                 <h3 className="text-lg font-semibold text-slate-900">Test Cases</h3>
               </div>
 
-              <div className="grid gap-3">
+              <div className="grid gap-4">
                 {testCases.map(([input, expected], caseIndex) => (
                   <div
                     key={caseIndex}
                     onClick={() => runTestCase(input)}
-                    className="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-blue-200"
+                    className="bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-blue-200 p-4"
                   >
-                    <div className="flex items-center space-x-4 flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-3">
                       <code className="text-sm bg-white px-3 py-1 rounded border font-mono">
                         {input.length === 0 ? 'empty tree' : input.map(v => v === null ? 'null' : v).join(',')}
                       </code>
+                      <div className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700">
+                        DFS: [{expected.join(', ')}]
+                      </div>
                     </div>
-                    <div className="w-auto px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700">
-                      [{expected.join(', ')}]
+                    
+                    {/* Visual Tree Representation */}
+                    <div className="bg-white rounded-lg border border-slate-200 p-3">
+                      <div className="text-xs text-slate-600 mb-2 text-center">Tree Structure</div>
+                      <div 
+                        className="scale-75 origin-top"
+                        dangerouslySetInnerHTML={{ 
+                          __html: createTreeVisualization(input, -1, new Set(), []) 
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
