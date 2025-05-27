@@ -473,8 +473,8 @@ export function DepthFirstValuesPlayground() {
     // Test 02: Just root 'a'
     [['a'], ['a']],
     
-    // Test 03: a(null,b(c,d(null,e))) -> Right-skewed tree
-    [['a', null, 'b', null, null, 'c', null, null, null, null, null, null, 'd', null, null, null, null, null, null, null, null, null, null, null, null, null, 'e'], ['a', 'b', 'c', 'd', 'e']],
+    // Test 03: a(null,b(null,c(null,d(null,e)))) -> Right-skewed tree
+    [['a', null, 'b', null, null, null, 'c', null, null, null, null, null, null, null, 'd', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'e'], ['a', 'b', 'c', 'd', 'e']],
     
     // Test 04: Empty tree
     [[], []],
