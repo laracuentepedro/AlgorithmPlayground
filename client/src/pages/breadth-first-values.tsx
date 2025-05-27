@@ -657,12 +657,20 @@ export function BreadthFirstValuesPlayground() {
                     {/* Visual Tree Representation */}
                     <div className="bg-white rounded-lg border border-slate-200 p-3">
                       <div className="text-xs text-slate-600 mb-2 text-center">Tree Structure</div>
-                      <div 
-                        className="scale-75 origin-top"
-                        dangerouslySetInnerHTML={{ 
-                          __html: createTreeVisualization(input, -1, new Set(), []) 
-                        }}
-                      />
+                      <div className="w-full overflow-x-auto">
+                        <div className="flex justify-center items-center min-h-[80px] sm:min-h-[120px] min-w-0">
+                          <div 
+                            className="scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100 origin-center transform-gpu flex-shrink-0"
+                            style={{ 
+                              width: 'max-content',
+                              transformOrigin: 'center center'
+                            }}
+                            dangerouslySetInnerHTML={{ 
+                              __html: createTreeVisualization(input, -1, new Set(), []) 
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
