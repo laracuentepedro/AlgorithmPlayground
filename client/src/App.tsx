@@ -9,6 +9,7 @@ import { AllUniquePlayground } from "./pages/all-unique";
 import { IntersectionWithDupesPlayground } from "./pages/intersection-with-dupes";
 import { LinkedListValuesPlayground } from "./pages/linked-list-values";
 import { SumListPlayground } from "./pages/sum-list";
+import { LinkedListFindPlayground } from "./pages/linked-list-find";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/intersection-with-dupes" component={IntersectionWithDupesPlayground} />
         <Route path="/linked-list-values" component={LinkedListValuesPlayground} />
         <Route path="/sum-list" component={SumListPlayground} />
+        <Route path="/linked-list-find" component={LinkedListFindPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

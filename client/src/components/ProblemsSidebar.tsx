@@ -45,7 +45,8 @@ export function ProblemsSidebar() {
       expanded: true,
       problems: [
         { name: "Linked List Values", difficulty: "Easy", completed: false, active: false, description: "Extract all values from a linked list", route: "/linked-list-values" },
-        { name: "Sum List", difficulty: "Easy", completed: false, active: true, description: "Calculate sum of all values in linked list", route: "/sum-list" },
+        { name: "Sum List", difficulty: "Easy", completed: false, active: false, description: "Calculate sum of all values in linked list", route: "/sum-list" },
+        { name: "Linked List Find", difficulty: "Easy", completed: false, active: true, description: "Search for a target value in linked list", route: "/linked-list-find" },
       ]
     },
     {
