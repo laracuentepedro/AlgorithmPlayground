@@ -87,7 +87,7 @@ export function ReverseListPlayground() {
         label = '<div class="text-xs text-purple-600 text-center mb-1">reversed</div>';
       }
       
-      const node = `<div class="flex flex-col items-center">${label}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold">${val}</span></div>`;
+      const node = `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold">${val}</span></div>`;
       
       // Show reversed arrows for connections that have been flipped
       let arrow = '';
@@ -102,7 +102,7 @@ export function ReverseListPlayground() {
       return node + arrow;
     }).join('');
     
-    return nodes + '<span class="ml-2 mt-6 text-slate-500">→ null</span>';
+    return `<div class="flex items-start">${nodes}<span class="ml-2 mt-6 text-slate-500">→ null</span></div>`;
   };
 
   const reverseListIterative = (values: (string | number)[]) => {

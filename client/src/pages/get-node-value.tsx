@@ -65,7 +65,7 @@ export function GetNodeValuePlayground() {
       }
       
       const indexLabel = `<div class="text-xs text-slate-500 text-center mb-1">index ${idx}</div>`;
-      const node = `<div class="flex flex-col items-center">${indexLabel}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold">${val}</span></div>`;
+      const node = `<div class="inline-flex flex-col items-center">${indexLabel}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold">${val}</span></div>`;
       const arrow = idx < values.length - 1 ? '<span class="mx-2 mt-6 text-slate-400">→</span>' : '';
       return node + arrow;
     }).join('');
@@ -73,7 +73,7 @@ export function GetNodeValuePlayground() {
     const targetDisplay = `<div class="mt-4 text-sm text-blue-600">Target Index: <span class="font-mono font-bold text-lg">${targetIndex}</span></div>`;
     const resultDisplay = foundValue !== undefined ? `<div class="mt-2 text-sm text-emerald-600">Result: <span class="font-mono font-bold text-lg">${foundValue === null ? 'null' : foundValue}</span></div>` : '';
     
-    return nodes + '<span class="ml-2 mt-6 text-slate-500">→ null</span>' + targetDisplay + resultDisplay;
+    return `<div class="flex items-start">${nodes}<span class="ml-2 mt-6 text-slate-500">→ null</span></div>` + targetDisplay + resultDisplay;
   };
 
   const getNodeValueIterative = (values: (string | number)[], targetIndex: number) => {
