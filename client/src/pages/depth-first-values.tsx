@@ -181,7 +181,14 @@ export function DepthFirstValuesPlayground() {
     const values: (string | number)[] = [];
     const stack: TreeNode[] = [root];
     const visitedNodes = new Set<number>();
-    let nodeIndex = 0;
+    
+    // Create a mapping from node values to their indices in the structure array
+    const nodeValueToIndex = new Map<string | number, number>();
+    structure.forEach((val, idx) => {
+      if (val !== null) {
+        nodeValueToIndex.set(val, idx);
+      }
+    });
     
     steps.push({
       step: 1,
@@ -197,7 +204,7 @@ export function DepthFirstValuesPlayground() {
 
     while (stack.length > 0) {
       const node = stack.pop()!;
-      const currentIndex = nodeIndex++;
+      const currentIndex = nodeValueToIndex.get(node.val) || 0;
       
       steps.push({
         step: steps.length + 1,
@@ -750,7 +757,16 @@ export function DepthFirstValuesPlayground() {
               {/* Algorithm State */}
               <div>
                 <h4 className="text-sm font-medium text-slate-700 mb-3">Algorithm State</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {/* Current Node */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="text-xs text-blue-600 font-medium">CURRENT NODE</div>
+                    <div className="font-mono text-lg text-blue-800 font-bold">
+                      {step.currentNode || 'null'}
+                    </div>
+                    <div className="text-xs text-blue-600 mt-1">Being processed</div>
+                  </div>
+
                   {selectedApproach === 'iterative' && (
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                       <div className="text-xs text-yellow-600 font-medium">STACK</div>
@@ -763,9 +779,9 @@ export function DepthFirstValuesPlayground() {
                   
                   {selectedApproach === 'recursive' && step.leftSubtree !== undefined && (
                     <>
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <div className="text-xs text-blue-600 font-medium">LEFT SUBTREE</div>
-                        <div className="font-mono text-sm text-blue-800">
+                      <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                        <div className="text-xs text-indigo-600 font-medium">LEFT SUBTREE</div>
+                        <div className="font-mono text-sm text-indigo-800">
                           [{step.leftSubtree.join(', ')}]
                         </div>
                       </div>
