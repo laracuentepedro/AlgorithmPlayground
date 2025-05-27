@@ -825,7 +825,7 @@ export function DepthFirstValuesPlayground() {
                       <div className="w-full overflow-x-auto">
                         <div className="flex justify-center items-center min-h-[80px] sm:min-h-[120px] min-w-0">
                           <div 
-                            className="scale-[0.25] xs:scale-[0.3] sm:scale-[0.4] md:scale-[0.5] lg:scale-[0.6] xl:scale-75 2xl:scale-100 origin-center transform-gpu flex-shrink-0"
+                            className="scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100 origin-center transform-gpu flex-shrink-0"
                             style={{ 
                               width: 'max-content',
                               transformOrigin: 'center center'
