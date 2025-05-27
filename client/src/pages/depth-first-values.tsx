@@ -313,7 +313,6 @@ export function DepthFirstValuesPlayground() {
     });
 
     const visitedNodes = new Set<number>();
-    let finalResult: (string | number)[] = [];
 
     steps.push({
       step: 1,
@@ -333,7 +332,7 @@ export function DepthFirstValuesPlayground() {
           description: `Base case: null node`,
           details: `Recursion depth ${depth}: Reached null node, return empty array`,
           action: 'base_case',
-          result: [...finalResult],
+          result: [],
           treeVisualization: createTreeVisualization(structure, -1, visitedNodes),
           approach: 'recursive',
           recursionDepth: depth
@@ -349,47 +348,34 @@ export function DepthFirstValuesPlayground() {
         details: `Recursion depth ${depth}: Processing node "${node.val}"`,
         action: 'recursive_call',
         currentNode: node.val,
-        result: [...finalResult],
+        result: [],
         treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
         approach: 'recursive',
         recursionDepth: depth
       });
 
-      steps.push({
-        step: steps.length + 1,
-        description: `Visit node "${node.val}"`,
-        details: `Recursion depth ${depth}: Add current node value to result`,
-        action: 'visit_node',
-        currentNode: node.val,
-        result: [...finalResult],
-        treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
-        approach: 'recursive',
-        recursionDepth: depth
-      });
-
-      // Add current node to final result and mark as visited
-      finalResult.push(node.val);
+      // Mark as visited for visualization
       visitedNodes.add(currentIndex);
 
       steps.push({
         step: steps.length + 1,
-        description: `Add "${node.val}" to result`,
-        details: `Recursion depth ${depth}: Value added to result array. Result so far: [${finalResult.join(', ')}]`,
-        action: 'add_to_result',
+        description: `Visit node "${node.val}"`,
+        details: `Recursion depth ${depth}: Processing current node value`,
+        action: 'visit_node',
         currentNode: node.val,
-        result: [...finalResult],
+        result: [],
         treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
         approach: 'recursive',
         recursionDepth: depth
       });
 
-      // Get left subtree values
+      // Get left subtree values (following exact proposed solution pattern)
       const leftValues = dfsRecursive(node.left, depth + 1);
       
-      // Get right subtree values
+      // Get right subtree values (following exact proposed solution pattern)
       const rightValues = dfsRecursive(node.right, depth + 1);
 
-      // Combine: current node + left subtree + right subtree
+      // Combine: current node + left subtree + right subtree (exact proposed solution pattern)
       const result = [node.val, ...leftValues, ...rightValues];
       
       steps.push({
@@ -398,7 +384,7 @@ export function DepthFirstValuesPlayground() {
         details: `Recursion depth ${depth}: [${node.val}] + [${leftValues.join(', ')}] + [${rightValues.join(', ')}] = [${result.join(', ')}]`,
         action: 'combine_results',
         currentNode: node.val,
-        result: [...finalResult],
+        result: result,
         leftSubtree: leftValues,
         rightSubtree: rightValues,
         treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
@@ -414,14 +400,14 @@ export function DepthFirstValuesPlayground() {
     steps.push({
       step: steps.length + 1,
       description: "Recursive DFS traversal complete!",
-      details: `All recursive calls finished. Final result: [${finalResult.join(', ')}]`,
+      details: `All recursive calls finished. Final result: [${algorithmResult.join(', ')}]`,
       action: 'complete',
-      result: finalResult,
+      result: algorithmResult,
       treeVisualization: createTreeVisualization(structure, -1, visitedNodes),
       approach: 'recursive'
     });
 
-    return { result: finalResult, steps };
+    return { result: algorithmResult, steps };
   };
 
   const parseStructure = (input: string): (string | number | null)[] => {
