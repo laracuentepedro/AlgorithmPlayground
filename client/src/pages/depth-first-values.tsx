@@ -464,28 +464,23 @@ export function DepthFirstValuesPlayground() {
   };
 
   const testCases: [(string | number | null)[], (string | number)[]][] = [
-    // Tree 1: a(b(d,e),c(null,f)) -> [a,b,c,d,e,null,f]
+    // Test 00: a(b(d,e),c(null,f)) -> [a,b,c,d,e,null,f]
     [['a', 'b', 'c', 'd', 'e', null, 'f'], ['a', 'b', 'd', 'e', 'c', 'f']],
     
-    // Tree 2: a(b(d,e(g,null)),c(null,f(null,h))) -> [a,b,c,d,e,null,f,null,null,g,null,null,null,null,h]
-    [['a', 'b', 'c', 'd', 'e', null, 'f', null, null, 'g', null, null, null, null, 'h'], ['a', 'b', 'd', 'e', 'g', 'c', 'f', 'h']],
+    // Test 01: a(b(d,e(g,null)),c(null,f)) -> [a,b,c,d,e,null,f,null,null,g,null]
+    [['a', 'b', 'c', 'd', 'e', null, 'f', null, null, 'g', null], ['a', 'b', 'd', 'e', 'g', 'c', 'f']],
     
-    // Tree 3: Just root 'a'
+    // Test 02: Just root 'a'
     [['a'], ['a']],
     
-    // Tree 4: a(null,b(c(x,d(null,e)),null)) -> More complex, let me map this correctly
-    // Level 0: a (index 0)
-    // Level 1: null, b (indices 1,2)
-    // Level 2: null, null, c, null (indices 3,4,5,6)
-    // Level 3: null, null, null, null, x, d, null, null (indices 7,8,9,10,11,12,13,14)
-    // Level 4: null, null, null, null, null, null, null, null, null, null, null, e (indices 15-26, e at 25)
-    [['a', null, 'b', null, null, 'c', null, null, null, null, null, 'x', 'd', null, null, null, null, null, null, null, null, null, null, null, null, 'e'], ['a', 'b', 'c', 'x', 'd', 'e']],
+    // Test 03: a(null,b(c,d(null,e))) -> Right-skewed tree
+    [['a', null, 'b', null, null, 'c', null, null, null, null, null, null, 'd', null, null, null, null, null, null, null, null, null, null, null, null, null, 'e'], ['a', 'b', 'c', 'd', 'e']],
     
-    // Tree 5: Perfect binary tree with numbers
-    [[1, 2, 3, 4, 5, 6, 7], [1, 2, 4, 5, 3, 6, 7]],
+    // Test 04: Empty tree
+    [[], []],
     
-    // Tree 6: Empty tree
-    [[], []]
+    // Additional test: Perfect binary tree with numbers
+    [[1, 2, 3, 4, 5, 6, 7], [1, 2, 4, 5, 3, 6, 7]]
   ];
 
   const step = steps[currentStep];
