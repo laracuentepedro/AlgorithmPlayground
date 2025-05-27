@@ -65,16 +65,23 @@ export function BreadthFirstValuesPlayground() {
       
       if (visitedNodes.has(index)) {
         nodeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
-        label = '<div class="text-xs text-emerald-600 text-center mb-1">visited</div>';
+        label = '<div class="text-xs text-emerald-600 text-center mb-2 font-medium">✓ visited</div>';
       } else if (index === currentIndex) {
         nodeClass = 'bg-blue-100 text-blue-800 border-blue-300';
-        label = '<div class="text-xs text-blue-600 text-center mb-1">current</div>';
+        label = '<div class="text-xs text-blue-600 text-center mb-2 font-medium">→ current</div>';
       } else if (queue.includes(value)) {
         nodeClass = 'bg-yellow-100 text-yellow-800 border-yellow-300';
-        label = '<div class="text-xs text-yellow-600 text-center mb-1">in queue</div>';
+        label = '<div class="text-xs text-yellow-600 text-center mb-2 font-medium">⏳ in queue</div>';
       }
       
-      return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-4 py-3 rounded-xl border-2 ${nodeClass} font-mono font-semibold text-lg">${value}</span></div>`;
+      return `
+        <div class="flex flex-col items-center min-w-[80px]">
+          ${label}
+          <div class="w-16 h-16 rounded-xl border-2 ${nodeClass} flex items-center justify-center font-mono font-bold text-lg shadow-sm">
+            ${value}
+          </div>
+        </div>
+      `;
     };
 
     // Create hierarchical tree visualization for any depth

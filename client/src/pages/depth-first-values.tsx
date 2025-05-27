@@ -68,16 +68,23 @@ export function DepthFirstValuesPlayground() {
       
       if (visitedNodes.has(index)) {
         nodeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
-        label = '<div class="text-xs text-emerald-600 text-center mb-1">visited</div>';
+        label = '<div class="text-xs text-emerald-600 text-center mb-2 font-medium">✓ visited</div>';
       } else if (index === currentIndex) {
         nodeClass = 'bg-blue-100 text-blue-800 border-blue-300';
-        label = '<div class="text-xs text-blue-600 text-center mb-1">current</div>';
+        label = '<div class="text-xs text-blue-600 text-center mb-2 font-medium">→ current</div>';
       } else if (stack.includes(value)) {
         nodeClass = 'bg-yellow-100 text-yellow-800 border-yellow-300';
-        label = '<div class="text-xs text-yellow-600 text-center mb-1">in stack</div>';
+        label = '<div class="text-xs text-yellow-600 text-center mb-2 font-medium">📚 in stack</div>';
       }
       
-      return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-4 py-3 rounded-xl border-2 ${nodeClass} font-mono font-semibold text-lg">${value}</span></div>`;
+      return `
+        <div class="flex flex-col items-center min-w-[80px]">
+          ${label}
+          <div class="w-16 h-16 rounded-xl border-2 ${nodeClass} flex items-center justify-center font-mono font-bold text-lg shadow-sm">
+            ${value}
+          </div>
+        </div>
+      `;
     };
 
     // Create hierarchical tree visualization for any depth
@@ -91,28 +98,34 @@ export function DepthFirstValuesPlayground() {
         const startIndex = Math.pow(2, level) - 1;
         const endIndex = Math.min(Math.pow(2, level + 1) - 1, structure.length);
         
-        // Calculate responsive spacing based on level and tree size
-        const baseSpacing = Math.max(Math.pow(2, maxDepth - level - 2), 1);
-        const spacing = Math.min(baseSpacing, 8); // Cap spacing for better container fit
+        let hasVisibleNodes = false;
         
         for (let i = startIndex; i < endIndex && i < structure.length; i++) {
           if (structure[i] !== null) {
             levelNodes.push(getNodeDisplay(i, structure[i]));
+            hasVisibleNodes = true;
           } else {
-            levelNodes.push(`<div class="w-12 h-12"></div>`); // Reduced size for null nodes
+            levelNodes.push(`<div class="w-20 h-20"></div>`); // Invisible spacer
           }
         }
         
-        // Only render level if it has at least one non-null node
-        if (levelNodes.some(node => !node.includes('w-12'))) {
-          const levelClass = 'justify-center';
-          const marginClass = level < maxDepth - 1 ? 'mb-4' : 'mb-2'; // Reduced margins
-          const spaceClass = spacing <= 2 ? 'space-x-2' : spacing <= 4 ? 'space-x-4' : 'space-x-6';
-          nodes.push(`<div class="flex ${levelClass} ${spaceClass} ${marginClass}">${levelNodes.join('')}</div>`);
+        if (hasVisibleNodes) {
+          const gapSize = Math.max(12 - level * 3, 2);
+          nodes.push(`
+            <div class="flex justify-center items-end gap-${gapSize} mb-8">
+              ${levelNodes.join('')}
+            </div>
+          `);
         }
       }
       
-      return `<div class="tree-visualization py-2 w-max min-w-0 flex flex-col items-center" style="min-width: fit-content;">${nodes.join('')}</div>`;
+      return `
+        <div class="tree-visualization py-6 overflow-x-auto">
+          <div class="min-w-fit mx-auto">
+            ${nodes.join('')}
+          </div>
+        </div>
+      `;
     }
     
     // For larger trees, show a simplified list view
