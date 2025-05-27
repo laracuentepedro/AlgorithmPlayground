@@ -1,0 +1,233 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+
+interface Problem {
+  name: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+  completed: boolean;
+  active: boolean;
+  description?: string;
+}
+
+interface ProblemTopic {
+  name: string;
+  icon: string;
+  problems: Problem[];
+  expanded: boolean;
+}
+
+export function ProblemsSidebar() {
+  const [topics, setTopics] = useState<ProblemTopic[]>([
+    {
+      name: "Hash Tables & Arrays",
+      icon: "fa-hashtag",
+      expanded: true,
+      problems: [
+        { name: "Anagrams", difficulty: "Easy", completed: false, active: true, description: "Check if two strings are anagrams" },
+        { name: "Two Sum", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that add to target" },
+        { name: "Group Anagrams", difficulty: "Medium", completed: false, active: false, description: "Group strings by anagram patterns" },
+        { name: "Valid Sudoku", difficulty: "Medium", completed: false, active: false, description: "Validate sudoku board state" },
+      ]
+    },
+    {
+      name: "Linked Lists",
+      icon: "fa-link",
+      expanded: false,
+      problems: [
+        { name: "Reverse Linked List", difficulty: "Easy", completed: false, active: false },
+        { name: "Merge Two Sorted Lists", difficulty: "Easy", completed: false, active: false },
+        { name: "Linked List Cycle", difficulty: "Easy", completed: false, active: false },
+        { name: "Remove Nth Node", difficulty: "Medium", completed: false, active: false },
+      ]
+    },
+    {
+      name: "Trees & Recursion",
+      icon: "fa-sitemap",
+      expanded: false,
+      problems: [
+        { name: "Maximum Depth of Binary Tree", difficulty: "Easy", completed: false, active: false },
+        { name: "Same Tree", difficulty: "Easy", completed: false, active: false },
+        { name: "Invert Binary Tree", difficulty: "Easy", completed: false, active: false },
+        { name: "Binary Tree Level Order", difficulty: "Medium", completed: false, active: false },
+      ]
+    },
+    {
+      name: "Dynamic Programming",
+      icon: "fa-chart-line",
+      expanded: false,
+      problems: [
+        { name: "Climbing Stairs", difficulty: "Easy", completed: false, active: false },
+        { name: "House Robber", difficulty: "Medium", completed: false, active: false },
+        { name: "Coin Change", difficulty: "Medium", completed: false, active: false },
+        { name: "Longest Common Subsequence", difficulty: "Medium", completed: false, active: false },
+      ]
+    },
+    {
+      name: "Graphs",
+      icon: "fa-project-diagram",
+      expanded: false,
+      problems: [
+        { name: "Number of Islands", difficulty: "Medium", completed: false, active: false },
+        { name: "Course Schedule", difficulty: "Medium", completed: false, active: false },
+        { name: "Clone Graph", difficulty: "Medium", completed: false, active: false },
+        { name: "Pacific Atlantic Water Flow", difficulty: "Medium", completed: false, active: false },
+      ]
+    },
+    {
+      name: "Sorting & Searching",
+      icon: "fa-sort",
+      expanded: false,
+      problems: [
+        { name: "Binary Search", difficulty: "Easy", completed: false, active: false },
+        { name: "Find First and Last Position", difficulty: "Medium", completed: false, active: false },
+        { name: "Search in Rotated Array", difficulty: "Medium", completed: false, active: false },
+        { name: "Merge Sort", difficulty: "Medium", completed: false, active: false },
+      ]
+    }
+  ]);
+
+  const toggleTopic = (topicIndex: number) => {
+    setTopics(prev => prev.map((topic, index) => 
+      index === topicIndex 
+        ? { ...topic, expanded: !topic.expanded }
+        : topic
+    ));
+  };
+
+  const getDifficultyColor = (difficulty: Problem["difficulty"]) => {
+    switch (difficulty) {
+      case "Easy": return "bg-emerald-100 text-emerald-800";
+      case "Medium": return "bg-amber-100 text-amber-800";
+      case "Hard": return "bg-red-100 text-red-800";
+    }
+  };
+
+  const getTotalProgress = () => {
+    const allProblems = topics.flatMap(topic => topic.problems);
+    const completed = allProblems.filter(p => p.completed).length;
+    return { completed, total: allProblems.length };
+  };
+
+  const progress = getTotalProgress();
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="sm" className="fixed top-4 left-4 z-50 bg-white/90 backdrop-blur-sm">
+          <i className="fas fa-bars mr-2"></i>
+          Problems
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-80 sm:w-96">
+        <SheetHeader>
+          <SheetTitle className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-violet-600 rounded-lg flex items-center justify-center">
+              <i className="fas fa-code text-white text-sm"></i>
+            </div>
+            <span>DSA Problems</span>
+          </SheetTitle>
+        </SheetHeader>
+
+        {/* Progress Overview */}
+        <div className="mt-6 p-4 bg-slate-50 rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-slate-700">Progress</span>
+            <span className="text-sm text-slate-600">{progress.completed}/{progress.total}</span>
+          </div>
+          <div className="w-full bg-slate-200 rounded-full h-2">
+            <div 
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${(progress.completed / progress.total) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Topics List */}
+        <div className="mt-6 space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
+          {topics.map((topic, topicIndex) => (
+            <div key={topicIndex} className="border border-slate-200 rounded-lg">
+              <Collapsible 
+                open={topic.expanded} 
+                onOpenChange={() => toggleTopic(topicIndex)}
+              >
+                <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+                      <i className={`fas ${topic.icon} text-slate-600 text-sm`}></i>
+                    </div>
+                    <div className="text-left">
+                      <div className="font-medium text-slate-900">{topic.name}</div>
+                      <div className="text-xs text-slate-500">{topic.problems.length} problems</div>
+                    </div>
+                  </div>
+                  <i className={`fas fa-chevron-${topic.expanded ? 'up' : 'down'} text-slate-400`}></i>
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent>
+                  <div className="px-4 pb-4 space-y-2">
+                    {topic.problems.map((problem, problemIndex) => (
+                      <div
+                        key={problemIndex}
+                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
+                          problem.active
+                            ? 'bg-blue-100 border border-blue-200'
+                            : 'hover:bg-slate-50'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3 flex-1">
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                            problem.completed 
+                              ? 'bg-emerald-100 text-emerald-600' 
+                              : problem.active
+                                ? 'bg-blue-100 text-blue-600'
+                                : 'bg-slate-100 text-slate-400'
+                          }`}>
+                            <i className={`fas ${
+                              problem.completed 
+                                ? 'fa-check' 
+                                : problem.active
+                                  ? 'fa-play'
+                                  : 'fa-circle'
+                            } text-xs`}></i>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className={`font-medium text-sm ${
+                              problem.active ? 'text-blue-900' : 'text-slate-900'
+                            }`}>
+                              {problem.name}
+                            </div>
+                            {problem.description && (
+                              <div className="text-xs text-slate-600 truncate">
+                                {problem.description}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <Badge 
+                          variant="secondary" 
+                          className={`text-xs ${getDifficultyColor(problem.difficulty)}`}
+                        >
+                          {problem.difficulty}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-slate-200">
+          <div className="text-xs text-slate-500 text-center">
+            Keep practicing to master data structures & algorithms!
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}

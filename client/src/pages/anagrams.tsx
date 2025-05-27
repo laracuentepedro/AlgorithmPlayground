@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sidebar } from "@/components/Sidebar";
+import { ProblemsSidebar } from "@/components/ProblemsSidebar";
 import { AnagramsPlayground as PlaygroundComponent } from "@/components/AnagramsPlayground";
 import { TestCases } from "@/components/TestCases";
 import { AlgorithmVisualization } from "@/components/AlgorithmVisualization";
@@ -203,11 +203,14 @@ export function AnagramsPlayground() {
 
   return (
     <div className="bg-slate-50 min-h-screen">
+      {/* Problems Sidebar */}
+      <ProblemsSidebar />
+
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 ml-20">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-violet-600 rounded-lg flex items-center justify-center">
                 <i className="fas fa-code text-white text-sm"></i>
               </div>
@@ -257,39 +260,32 @@ export function AnagramsPlayground() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <Sidebar />
-          </div>
+        {/* Main Content - Full Width */}
+        <div className="space-y-8">
+          {/* Interactive Playground */}
+          <PlaygroundComponent
+            string1={string1}
+            string2={string2}
+            result={result}
+            executionTime={executionTime}
+            onString1Change={setString1}
+            onString2Change={setString2}
+            onRunAlgorithm={runAlgorithm}
+            onReset={resetPlayground}
+          />
 
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-8">
-            {/* Interactive Playground */}
-            <PlaygroundComponent
-              string1={string1}
-              string2={string2}
-              result={result}
-              executionTime={executionTime}
-              onString1Change={setString1}
-              onString2Change={setString2}
-              onRunAlgorithm={runAlgorithm}
-              onReset={resetPlayground}
+          {/* Algorithm Visualization */}
+          {showVisualization && steps.length > 0 && (
+            <AlgorithmVisualization
+              steps={steps}
+              currentStep={currentStep}
+              onStepChange={setCurrentStep}
             />
+          )}
 
-            {/* Algorithm Visualization */}
-            {showVisualization && steps.length > 0 && (
-              <AlgorithmVisualization
-                steps={steps}
-                currentStep={currentStep}
-                onStepChange={setCurrentStep}
-              />
-            )}
-
-            {/* Test Cases */}
+          {/* Test Cases and Solution Code - Side by Side */}
+          <div className="grid lg:grid-cols-2 gap-8">
             <TestCases onRunTestCase={runTestCase} />
-
-            {/* Solution Code */}
             <SolutionCode />
           </div>
         </div>
