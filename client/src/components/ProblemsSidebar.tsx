@@ -54,18 +54,15 @@ export function ProblemsSidebar() {
         { name: "Is Univalue List", difficulty: "Easy", completed: false, active: false, description: "Check if all nodes have same value", route: "/is-univalue-list" },
         { name: "Longest Streak", difficulty: "Easy", completed: false, active: false, description: "Find longest consecutive sequence", route: "/longest-streak" },
         { name: "Remove Node", difficulty: "Easy", completed: false, active: false, description: "Delete first occurrence of target value", route: "/remove-node" },
-        { name: "Insert Node", difficulty: "Easy", completed: false, active: true, description: "Add new node at specified index", route: "/insert-node" },
+        { name: "Insert Node", difficulty: "Easy", completed: false, active: false, description: "Add new node at specified index", route: "/insert-node" },
       ]
     },
     {
       name: "Trees & Recursion",
       icon: "fa-sitemap",
-      expanded: false,
+      expanded: true,
       problems: [
-        { name: "Maximum Depth of Binary Tree", difficulty: "Easy", completed: false, active: false },
-        { name: "Same Tree", difficulty: "Easy", completed: false, active: false },
-        { name: "Invert Binary Tree", difficulty: "Easy", completed: false, active: false },
-        { name: "Binary Tree Level Order", difficulty: "Medium", completed: false, active: false },
+        { name: "Depth First Values", difficulty: "Easy", completed: false, active: true, description: "Traverse tree using depth-first search", route: "/depth-first-values" },
       ]
     },
     {
