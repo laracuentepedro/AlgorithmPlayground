@@ -60,8 +60,8 @@ export function DepthFirstValuesPlayground() {
     }
 
     // Helper function to get node display
-    const getNodeDisplay = (index: number, value: string | number | null, position: string = ''): string => {
-      if (value === null) return '<div class="w-16 h-16"></div>';
+    const getNodeDisplay = (index: number, value: string | number | null): string => {
+      if (value === null) return '';
       
       let nodeClass = 'bg-white border-slate-300';
       let label = '';
@@ -77,163 +77,50 @@ export function DepthFirstValuesPlayground() {
         label = '<div class="text-xs text-yellow-600 text-center mb-1">in stack</div>';
       }
       
-      return `
-        <div class="flex flex-col items-center relative ${position}">
-          ${label}
-          <div class="w-16 h-16 rounded-full border-3 ${nodeClass} flex items-center justify-center font-mono font-bold text-lg shadow-sm">
-            ${value}
-          </div>
-        </div>
-      `;
+      return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-4 py-3 rounded-xl border-2 ${nodeClass} font-mono font-semibold text-lg">${value}</span></div>`;
     };
 
-    // Helper function to create connecting lines
-    const createConnection = (type: 'left' | 'right'): string => {
-      const isLeft = type === 'left';
-      return `
-        <div class="absolute ${isLeft ? 'left-8' : 'right-8'} top-16 w-8 h-8 flex items-center justify-center">
-          <div class="w-full h-0.5 bg-slate-400"></div>
-          <div class="absolute ${isLeft ? 'left-full' : 'right-full'} top-0 w-0.5 h-8 bg-slate-400"></div>
-        </div>
-      `;
-    };
-
-    // Create enhanced tree visualization
-    if (structure.length <= 15) {
-      let html = '<div class="relative py-8">';
+    // Create simple tree visualization
+    if (structure.length <= 7) {
+      const nodes = [];
       
       // Level 0 (root)
       if (structure[0] !== null) {
-        html += `
-          <div class="flex justify-center mb-16 relative">
-            ${getNodeDisplay(0, structure[0])}
-        `;
-        
-        // Add connections to children if they exist
-        if ((structure.length > 1 && structure[1] !== null) || (structure.length > 2 && structure[2] !== null)) {
-          html += `
-            <div class="absolute top-16 left-1/2 transform -translate-x-1/2">
-              <div class="w-0.5 h-8 bg-slate-400"></div>
-            </div>
-          `;
-          
-          if (structure.length > 1 && structure[1] !== null) {
-            html += `
-              <div class="absolute top-24 left-1/2 transform -translate-x-1/2 -translate-x-16">
-                <div class="w-16 h-0.5 bg-slate-400"></div>
-              </div>
-            `;
-          }
-          
-          if (structure.length > 2 && structure[2] !== null) {
-            html += `
-              <div class="absolute top-24 left-1/2 transform -translate-x-1/2 translate-x-16">
-                <div class="w-16 h-0.5 bg-slate-400"></div>
-              </div>
-            `;
-          }
-        }
-        
-        html += '</div>';
+        nodes.push(`<div class="flex justify-center mb-6">${getNodeDisplay(0, structure[0])}</div>`);
       }
       
       // Level 1
-      if (structure.length > 1 || structure.length > 2) {
-        html += '<div class="flex justify-center items-start space-x-32 mb-16 relative">';
-        
-        // Left child
-        if (structure.length > 1) {
-          html += getNodeDisplay(1, structure[1], 'relative');
-          
-          // Connections to level 2 children
-          if (structure.length > 3 || structure.length > 4) {
-            if (structure[1] !== null && ((structure.length > 3 && structure[3] !== null) || (structure.length > 4 && structure[4] !== null))) {
-              html += `
-                <div class="absolute top-16 left-8 transform -translate-x-1/2">
-                  <div class="w-0.5 h-8 bg-slate-400"></div>
-                </div>
-              `;
-              
-              if (structure.length > 3 && structure[3] !== null) {
-                html += `
-                  <div class="absolute top-24 left-8 transform -translate-x-1/2 -translate-x-8">
-                    <div class="w-8 h-0.5 bg-slate-400"></div>
-                  </div>
-                `;
-              }
-              
-              if (structure.length > 4 && structure[4] !== null) {
-                html += `
-                  <div class="absolute top-24 left-8 transform -translate-x-1/2 translate-x-8">
-                    <div class="w-8 h-0.5 bg-slate-400"></div>
-                  </div>
-                `;
-              }
-            }
-          }
-        } else {
-          html += '<div class="w-16 h-16"></div>';
-        }
-        
-        // Right child
-        if (structure.length > 2) {
-          html += getNodeDisplay(2, structure[2], 'relative');
-          
-          // Connections to level 2 children
-          if (structure.length > 5 || structure.length > 6) {
-            if (structure[2] !== null && ((structure.length > 5 && structure[5] !== null) || (structure.length > 6 && structure[6] !== null))) {
-              html += `
-                <div class="absolute top-16 right-8 transform translate-x-1/2">
-                  <div class="w-0.5 h-8 bg-slate-400"></div>
-                </div>
-              `;
-              
-              if (structure.length > 5 && structure[5] !== null) {
-                html += `
-                  <div class="absolute top-24 right-8 transform translate-x-1/2 -translate-x-8">
-                    <div class="w-8 h-0.5 bg-slate-400"></div>
-                  </div>
-                `;
-              }
-              
-              if (structure.length > 6 && structure[6] !== null) {
-                html += `
-                  <div class="absolute top-24 right-8 transform translate-x-1/2 translate-x-8">
-                    <div class="w-8 h-0.5 bg-slate-400"></div>
-                  </div>
-                `;
-              }
-            }
-          }
-        } else {
-          html += '<div class="w-16 h-16"></div>';
-        }
-        
-        html += '</div>';
+      const level1 = [];
+      if (structure.length > 1 && structure[1] !== null) level1.push(getNodeDisplay(1, structure[1]));
+      else level1.push('<div class="w-20"></div>');
+      if (structure.length > 2 && structure[2] !== null) level1.push(getNodeDisplay(2, structure[2]));
+      else level1.push('<div class="w-20"></div>');
+      
+      if (level1.some(node => node !== '<div class="w-20"></div>')) {
+        nodes.push(`<div class="flex justify-center space-x-16 mb-6">${level1.join('')}</div>`);
       }
       
       // Level 2
-      if (structure.length > 3) {
-        html += '<div class="flex justify-center items-start space-x-16 mb-8">';
-        
-        for (let i = 3; i < Math.min(7, structure.length); i++) {
-          html += getNodeDisplay(i, structure[i]);
-        }
-        
-        html += '</div>';
+      const level2 = [];
+      for (let i = 3; i < 7 && i < structure.length; i++) {
+        if (structure[i] !== null) level2.push(getNodeDisplay(i, structure[i]));
+        else level2.push('<div class="w-16"></div>');
       }
       
-      html += '</div>';
-      return html;
+      if (level2.some(node => node !== '<div class="w-16"></div>')) {
+        nodes.push(`<div class="flex justify-center space-x-8 mb-6">${level2.join('')}</div>`);
+      }
+      
+      return `<div class="tree-visualization py-4">${nodes.join('')}</div>`;
     }
     
-    // For larger trees, show a simplified horizontal layout
+    // For larger trees, show a simplified list view
     const nodesList = structure
       .map((val, idx) => val !== null ? getNodeDisplay(idx, val) : '')
       .filter(node => node !== '')
       .join(' ');
     
-    return `<div class="flex flex-wrap justify-center gap-4 py-4">${nodesList}</div>`;
+    return `<div class="flex flex-wrap justify-center gap-3 py-4">${nodesList}</div>`;
   };
 
   const buildTreeFromArray = (arr: (string | number | null)[]): TreeNode | null => {
