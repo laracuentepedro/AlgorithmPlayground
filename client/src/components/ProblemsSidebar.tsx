@@ -33,7 +33,8 @@ export function ProblemsSidebar() {
         { name: "Most Frequent Character", difficulty: "Easy", completed: false, active: false, description: "Find the most frequent character in a string", route: "/most-frequent-char" },
         { name: "Pair Sum", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that add to target", route: "/pair-sum" },
         { name: "Pair Product", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that multiply to target", route: "/pair-product" },
-        { name: "Intersection", difficulty: "Easy", completed: false, active: true, description: "Find common elements between two arrays", route: "/intersection" },
+        { name: "Intersection", difficulty: "Easy", completed: false, active: false, description: "Find common elements between two arrays", route: "/intersection" },
+        { name: "Exclusive Items", difficulty: "Easy", completed: false, active: true, description: "Find elements in either array but not both", route: "/exclusive-items" },
         { name: "Group Anagrams", difficulty: "Medium", completed: false, active: false, description: "Group strings by anagram patterns" },
         { name: "Valid Sudoku", difficulty: "Medium", completed: false, active: false, description: "Validate sudoku board state" },
       ]

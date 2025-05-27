@@ -4,6 +4,7 @@ import { MostFrequentCharPlayground } from "./pages/most-frequent-char";
 import { PairSumPlayground } from "./pages/pair-sum";
 import { PairProductPlayground } from "./pages/pair-product";
 import { IntersectionPlayground } from "./pages/intersection";
+import { ExclusiveItemsPlayground } from "./pages/exclusive-items";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/pair-sum" component={PairSumPlayground} />
         <Route path="/pair-product" component={PairProductPlayground} />
         <Route path="/intersection" component={IntersectionPlayground} />
+        <Route path="/exclusive-items" component={ExclusiveItemsPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>
