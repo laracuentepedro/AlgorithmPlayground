@@ -46,7 +46,8 @@ export function ProblemsSidebar() {
       problems: [
         { name: "Linked List Values", difficulty: "Easy", completed: false, active: false, description: "Extract all values from a linked list", route: "/linked-list-values" },
         { name: "Sum List", difficulty: "Easy", completed: false, active: false, description: "Calculate sum of all values in linked list", route: "/sum-list" },
-        { name: "Linked List Find", difficulty: "Easy", completed: false, active: true, description: "Search for a target value in linked list", route: "/linked-list-find" },
+        { name: "Linked List Find", difficulty: "Easy", completed: false, active: false, description: "Search for a target value in linked list", route: "/linked-list-find" },
+        { name: "Get Node Value", difficulty: "Easy", completed: false, active: true, description: "Get value at specific index in linked list", route: "/get-node-value" },
       ]
     },
     {
