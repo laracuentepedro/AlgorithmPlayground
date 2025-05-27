@@ -52,7 +52,8 @@ export function ProblemsSidebar() {
         { name: "Zipper Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two lists by alternating nodes", route: "/zipper-lists" },
         { name: "Merge Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two sorted lists into one", route: "/merge-lists" },
         { name: "Is Univalue List", difficulty: "Easy", completed: false, active: false, description: "Check if all nodes have same value", route: "/is-univalue-list" },
-        { name: "Longest Streak", difficulty: "Easy", completed: false, active: true, description: "Find longest consecutive sequence", route: "/longest-streak" },
+        { name: "Longest Streak", difficulty: "Easy", completed: false, active: false, description: "Find longest consecutive sequence", route: "/longest-streak" },
+        { name: "Remove Node", difficulty: "Easy", completed: false, active: true, description: "Delete first occurrence of target value", route: "/remove-node" },
       ]
     },
     {
