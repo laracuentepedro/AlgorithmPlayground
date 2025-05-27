@@ -185,7 +185,7 @@ export function ReverseListPlayground() {
       prevNode: values.length > 0 ? values[values.length - 1] : null,
       nextNode: null,
       originalVisualization: createOriginalVisualization(originalOrder),
-      currentVisualization: createOriginalVisualization(reversedValues),
+      currentVisualization: createCurrentVisualization(reversedValues, -1, -1, -1, [...Array(values.length).keys()]),
       approach: 'iterative',
       result: reversedValues
     });
