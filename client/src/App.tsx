@@ -15,6 +15,7 @@ import { ReverseListPlayground } from "./pages/reverse-list";
 import { ZipperListsPlayground } from "./pages/zipper-lists";
 import { MergeListsPlayground } from "./pages/merge-lists";
 import { IsUnivalueListPlayground } from "./pages/is-univalue-list";
+import { LongestStreakPlayground } from "./pages/longest-streak";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/zipper-lists" component={ZipperListsPlayground} />
         <Route path="/merge-lists" component={MergeListsPlayground} />
         <Route path="/is-univalue-list" component={IsUnivalueListPlayground} />
+        <Route path="/longest-streak" component={LongestStreakPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

@@ -51,7 +51,8 @@ export function ProblemsSidebar() {
         { name: "Reverse List", difficulty: "Medium", completed: false, active: false, description: "Reverse a linked list in-place", route: "/reverse-list" },
         { name: "Zipper Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two lists by alternating nodes", route: "/zipper-lists" },
         { name: "Merge Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two sorted lists into one", route: "/merge-lists" },
-        { name: "Is Univalue List", difficulty: "Easy", completed: false, active: true, description: "Check if all nodes have same value", route: "/is-univalue-list" },
+        { name: "Is Univalue List", difficulty: "Easy", completed: false, active: false, description: "Check if all nodes have same value", route: "/is-univalue-list" },
+        { name: "Longest Streak", difficulty: "Easy", completed: false, active: true, description: "Find longest consecutive sequence", route: "/longest-streak" },
       ]
     },
     {
