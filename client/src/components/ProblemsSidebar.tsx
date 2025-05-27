@@ -48,7 +48,8 @@ export function ProblemsSidebar() {
         { name: "Sum List", difficulty: "Easy", completed: false, active: false, description: "Calculate sum of all values in linked list", route: "/sum-list" },
         { name: "Linked List Find", difficulty: "Easy", completed: false, active: false, description: "Search for a target value in linked list", route: "/linked-list-find" },
         { name: "Get Node Value", difficulty: "Easy", completed: false, active: false, description: "Get value at specific index in linked list", route: "/get-node-value" },
-        { name: "Reverse List", difficulty: "Medium", completed: false, active: true, description: "Reverse a linked list in-place", route: "/reverse-list" },
+        { name: "Reverse List", difficulty: "Medium", completed: false, active: false, description: "Reverse a linked list in-place", route: "/reverse-list" },
+        { name: "Zipper Lists", difficulty: "Medium", completed: false, active: true, description: "Merge two lists by alternating nodes", route: "/zipper-lists" },
       ]
     },
     {

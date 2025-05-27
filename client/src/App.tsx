@@ -12,6 +12,7 @@ import { SumListPlayground } from "./pages/sum-list";
 import { LinkedListFindPlayground } from "./pages/linked-list-find";
 import { GetNodeValuePlayground } from "./pages/get-node-value";
 import { ReverseListPlayground } from "./pages/reverse-list";
+import { ZipperListsPlayground } from "./pages/zipper-lists";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/linked-list-find" component={LinkedListFindPlayground} />
         <Route path="/get-node-value" component={GetNodeValuePlayground} />
         <Route path="/reverse-list" component={ReverseListPlayground} />
+        <Route path="/zipper-lists" component={ZipperListsPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>
