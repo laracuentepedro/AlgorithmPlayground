@@ -50,7 +50,8 @@ export function ProblemsSidebar() {
         { name: "Get Node Value", difficulty: "Easy", completed: false, active: false, description: "Get value at specific index in linked list", route: "/get-node-value" },
         { name: "Reverse List", difficulty: "Medium", completed: false, active: false, description: "Reverse a linked list in-place", route: "/reverse-list" },
         { name: "Zipper Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two lists by alternating nodes", route: "/zipper-lists" },
-        { name: "Merge Lists", difficulty: "Medium", completed: false, active: true, description: "Merge two sorted lists into one", route: "/merge-lists" },
+        { name: "Merge Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two sorted lists into one", route: "/merge-lists" },
+        { name: "Is Univalue List", difficulty: "Easy", completed: false, active: true, description: "Check if all nodes have same value", route: "/is-univalue-list" },
       ]
     },
     {
