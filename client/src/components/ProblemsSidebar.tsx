@@ -68,7 +68,8 @@ export function ProblemsSidebar() {
         { name: "Tree Includes", difficulty: "Easy", completed: false, active: false, description: "Search for a value in binary tree", route: "/tree-includes" },
         { name: "Tree Min Value", difficulty: "Easy", completed: false, active: false, description: "Find minimum value in binary tree", route: "/tree-min-value" },
         { name: "Max Path Sum", difficulty: "Medium", completed: false, active: false, description: "Find maximum root-to-leaf path sum", route: "/max-path-sum" },
-        { name: "Tree Path Finder", difficulty: "Medium", completed: false, active: true, description: "Find path from root to target value", route: "/tree-path-finder" },
+        { name: "Tree Path Finder", difficulty: "Medium", completed: false, active: false, description: "Find path from root to target value", route: "/tree-path-finder" },
+        { name: "Tree Value Count", difficulty: "Easy", completed: false, active: true, description: "Count occurrences of a value in tree", route: "/tree-value-count" },
       ]
     },
     {

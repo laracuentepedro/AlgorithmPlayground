@@ -25,6 +25,7 @@ import { TreeIncludesPlayground } from "./pages/tree-includes";
 import { TreeMinValuePlayground } from "./pages/tree-min-value";
 import { MaxPathSumPlayground } from "./pages/max-path-sum";
 import { TreePathFinderPlayground } from "./pages/tree-path-finder";
+import { TreeValueCountPlayground } from "./pages/tree-value-count";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/tree-min-value" component={TreeMinValuePlayground} />
         <Route path="/max-path-sum" component={MaxPathSumPlayground} />
         <Route path="/tree-path-finder" component={TreePathFinderPlayground} />
+        <Route path="/tree-value-count" component={TreeValueCountPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>
