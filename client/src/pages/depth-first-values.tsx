@@ -91,27 +91,28 @@ export function DepthFirstValuesPlayground() {
         const startIndex = Math.pow(2, level) - 1;
         const endIndex = Math.min(Math.pow(2, level + 1) - 1, structure.length);
         
-        // Calculate spacing based on level
-        const baseSpacing = Math.pow(2, maxDepth - level - 1) * 4;
-        const spacing = Math.max(baseSpacing, 4);
+        // Calculate responsive spacing based on level and tree size
+        const baseSpacing = Math.max(Math.pow(2, maxDepth - level - 2), 1);
+        const spacing = Math.min(baseSpacing, 8); // Cap spacing for better container fit
         
         for (let i = startIndex; i < endIndex && i < structure.length; i++) {
           if (structure[i] !== null) {
             levelNodes.push(getNodeDisplay(i, structure[i]));
           } else {
-            levelNodes.push(`<div class="w-20"></div>`);
+            levelNodes.push(`<div class="w-12 h-12"></div>`); // Reduced size for null nodes
           }
         }
         
         // Only render level if it has at least one non-null node
-        if (levelNodes.some(node => !node.includes('w-20'))) {
-          const levelClass = level === 0 ? 'justify-center' : 'justify-center';
-          const marginClass = level < maxDepth - 1 ? 'mb-6' : 'mb-2';
-          nodes.push(`<div class="flex ${levelClass} space-x-${Math.min(spacing, 16)} ${marginClass}">${levelNodes.join('')}</div>`);
+        if (levelNodes.some(node => !node.includes('w-12'))) {
+          const levelClass = 'justify-center';
+          const marginClass = level < maxDepth - 1 ? 'mb-4' : 'mb-2'; // Reduced margins
+          const spaceClass = spacing <= 2 ? 'space-x-2' : spacing <= 4 ? 'space-x-4' : 'space-x-6';
+          nodes.push(`<div class="flex ${levelClass} ${spaceClass} ${marginClass}">${levelNodes.join('')}</div>`);
         }
       }
       
-      return `<div class="tree-visualization py-4">${nodes.join('')}</div>`;
+      return `<div class="tree-visualization py-2 w-full max-w-full overflow-hidden">${nodes.join('')}</div>`;
     }
     
     // For larger trees, show a simplified list view
@@ -812,14 +813,17 @@ export function DepthFirstValuesPlayground() {
                     </div>
                     
                     {/* Visual Tree Representation */}
-                    <div className="bg-white rounded-lg border border-slate-200 p-3">
+                    <div className="bg-white rounded-lg border border-slate-200 p-3 overflow-hidden">
                       <div className="text-xs text-slate-600 mb-2 text-center">Tree Structure</div>
-                      <div 
-                        className="scale-75 origin-top"
-                        dangerouslySetInnerHTML={{ 
-                          __html: createTreeVisualization(input, -1, new Set(), []) 
-                        }}
-                      />
+                      <div className="flex justify-center items-center min-h-[120px]">
+                        <div 
+                          className="scale-50 origin-center transform-gpu"
+                          style={{ maxWidth: '100%', overflow: 'hidden' }}
+                          dangerouslySetInnerHTML={{ 
+                            __html: createTreeVisualization(input, -1, new Set(), []) 
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
