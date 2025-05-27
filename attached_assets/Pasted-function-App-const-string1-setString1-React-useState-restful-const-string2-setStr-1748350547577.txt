@@ -1,0 +1,300 @@
+function App() {
+  const [string1, setString1] = React.useState('restful');
+  const [string2, setString2] = React.useState('fluster');
+  const [result, setResult] = React.useState(null);
+  const [steps, setSteps] = React.useState([]);
+  const [showSolution, setShowSolution] = React.useState(false);
+
+  const anagramsWithSteps = (s1, s2) => {
+    const stepsList = [];
+    const count = {};
+    
+    stepsList.push({
+      step: 1,
+      description: `Initialize empty count object and process first string "${s1}"`,
+      count: {},
+      action: 'initialize'
+    });
+
+    // Count characters in first string
+    for (let char of s1) {
+      if (!(char in count)) {
+        count[char] = 0;
+      }
+      count[char] += 1;
+      stepsList.push({
+        step: stepsList.length + 1,
+        description: `Character '${char}' found, count is now ${count[char]}`,
+        count: {...count},
+        action: 'count'
+      });
+    }
+
+    stepsList.push({
+      step: stepsList.length + 1,
+      description: `Now processing second string "${s2}" and decrementing counts`,
+      count: {...count},
+      action: 'process_second'
+    });
+
+    // Process second string
+    for (let char of s2) {
+      if (count[char] === undefined) {
+        stepsList.push({
+          step: stepsList.length + 1,
+          description: `Character '${char}' not found in first string - NOT ANAGRAMS`,
+          count: {...count},
+          action: 'not_found',
+          result: false
+        });
+        return { result: false, steps: stepsList };
+      } else {
+        count[char] -= 1;
+        stepsList.push({
+          step: stepsList.length + 1,
+          description: `Character '${char}' decremented, count is now ${count[char]}`,
+          count: {...count},
+          action: 'decrement'
+        });
+      }
+    }
+
+    stepsList.push({
+      step: stepsList.length + 1,
+      description: `Checking if all counts are zero...`,
+      count: {...count},
+      action: 'final_check'
+    });
+
+    // Check if all counts are zero
+    for (let char in count) {
+      if (count[char] !== 0) {
+        stepsList.push({
+          step: stepsList.length + 1,
+          description: `Character '${char}' has count ${count[char]} ≠ 0 - NOT ANAGRAMS`,
+          count: {...count},
+          action: 'non_zero',
+          result: false
+        });
+        return { result: false, steps: stepsList };
+      }
+    }
+
+    stepsList.push({
+      step: stepsList.length + 1,
+      description: `All counts are zero - ANAGRAMS!`,
+      count: {...count},
+      action: 'success',
+      result: true
+    });
+
+    return { result: true, steps: stepsList };
+  };
+
+  const testAnagrams = () => {
+    const { result: isAnagram, steps: stepsList } = anagramsWithSteps(string1, string2);
+    setResult(isAnagram);
+    setSteps(stepsList);
+  };
+
+  const testCases = [
+    ['restful', 'fluster', true],
+    ['cats', 'tocs', false],
+    ['monkeyswrite', 'newyorktimes', true],
+    ['paper', 'reapa', false],
+    ['elbow', 'below', true],
+    ['tax', 'taxi', false],
+    ['night', 'thing', true],
+    ['abbc', 'aabc', false]
+  ];
+
+  const runTestCase = (s1, s2) => {
+    setString1(s1);
+    setString2(s2);
+    const { result: isAnagram, steps: stepsList } = anagramsWithSteps(s1, s2);
+    setResult(isAnagram);
+    setSteps(stepsList);
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h1 className="text-3xl font-bold text-blue-600 mb-4">Anagrams Problem - Interactive Learning Tool</h1>
+        
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+          <h2 className="text-xl font-semibold mb-2">Problem Statement</h2>
+          <p className="text-gray-700">
+            Write a function that takes two strings and returns true if they are anagrams. 
+            Anagrams are strings that contain the same characters, but in any order.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-4">Test the Algorithm</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">String 1:</label>
+                <input
+                  type="text"
+                  value={string1}
+                  onChange={(e) => setString1(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">String 2:</label>
+                <input
+                  type="text"
+                  value={string2}
+                  onChange={(e) => setString2(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <button
+                onClick={testAnagrams}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                Check if Anagrams
+              </button>
+              
+              {result !== null && (
+                <div className={`p-3 rounded-md text-center font-semibold ${
+                  result ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                  {result ? '✓ ANAGRAMS' : '✗ NOT ANAGRAMS'}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-4">Test Cases</h3>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {testCases.map((testCase, index) => (
+                <div
+                  key={index}
+                  onClick={() => runTestCase(testCase[0], testCase[1])}
+                  className="p-2 bg-white rounded border cursor-pointer hover:bg-blue-50 transition duration-200"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">
+                      "{testCase[0]}" & "{testCase[1]}"
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      testCase[2] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`}>
+                      {testCase[2] ? 'true' : 'false'}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {steps.length > 0 && (
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h2 className="text-2xl font-semibold mb-4">Step-by-Step Execution</h2>
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {steps.map((step, index) => (
+              <div key={index} className={`p-3 rounded-lg border-l-4 ${
+                step.action === 'success' ? 'border-green-400 bg-green-50' :
+                step.action === 'not_found' || step.action === 'non_zero' ? 'border-red-400 bg-red-50' :
+                'border-blue-400 bg-blue-50'
+              }`}>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900">Step {step.step}</div>
+                    <div className="text-sm text-gray-700 mt-1">{step.description}</div>
+                  </div>
+                  <div className="ml-4 text-xs bg-gray-100 p-2 rounded font-mono">
+                    {JSON.stringify(step.count)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Solution & Analysis</h2>
+          <button
+            onClick={() => setShowSolution(!showSolution)}
+            className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200"
+          >
+            {showSolution ? 'Hide' : 'Show'} Solution
+          </button>
+        </div>
+        
+        {showSolution && (
+          <>
+            <div className="bg-gray-900 text-green-400 p-4 rounded-lg mb-4 overflow-x-auto">
+              <pre className="text-sm">
+{`const anagrams = (s1, s2) => {
+  const count = {};
+  
+  // Count characters in first string
+  for (let char of s1) {
+    if (!(char in count)) {
+      count[char] = 0;
+    }
+    count[char] += 1;
+  }
+  
+  // Process second string
+  for (let char of s2) {
+    if (count[char] === undefined) {
+      return false;
+    } else {
+      count[char] -= 1;
+    }
+  }
+  
+  // Check if all counts are zero
+  for (let char in count) {
+    if (count[char] !== 0) {
+      return false;
+    }
+  }
+  
+  return true;
+};`}
+              </pre>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">Algorithm Steps</h3>
+                <ol className="list-decimal list-inside space-y-2 text-sm">
+                  <li>Create a count object to track character frequencies</li>
+                  <li>Iterate through first string and count each character</li>
+                  <li>Iterate through second string and decrement counts</li>
+                  <li>If any character is not found, return false</li>
+                  <li>Check if all counts are zero at the end</li>
+                  <li>Return true if all counts are zero, false otherwise</li>
+                </ol>
+              </div>
+              
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">Complexity Analysis</h3>
+                <div className="text-sm space-y-2">
+                  <div><strong>Time Complexity:</strong> O(n + m)</div>
+                  <div className="text-gray-600 ml-4">n = length of string 1, m = length of string 2</div>
+                  <div><strong>Space Complexity:</strong> O(n)</div>
+                  <div className="text-gray-600 ml-4">Space for the count object storing unique characters</div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
