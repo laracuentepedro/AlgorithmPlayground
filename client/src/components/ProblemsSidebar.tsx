@@ -121,7 +121,7 @@ export function ProblemsSidebar() {
           <span className="hidden sm:inline">Problems</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-80 sm:w-96">
+      <SheetContent side="left" className="w-72 sm:w-96">
         <SheetHeader>
           <SheetTitle className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-violet-600 rounded-lg flex items-center justify-center">
@@ -153,17 +153,17 @@ export function ProblemsSidebar() {
                 open={topic.expanded} 
                 onOpenChange={() => toggleTopic(topicIndex)}
               >
-                <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
-                      <i className={`fas ${topic.icon} text-slate-600 text-sm`}></i>
+                <CollapsibleTrigger className="w-full p-3 sm:p-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i className={`fas ${topic.icon} text-slate-600 text-xs sm:text-sm`}></i>
                     </div>
-                    <div className="text-left">
-                      <div className="font-medium text-slate-900">{topic.name}</div>
+                    <div className="text-left min-w-0 flex-1">
+                      <div className="font-medium text-slate-900 text-sm sm:text-base truncate">{topic.name}</div>
                       <div className="text-xs text-slate-500">{topic.problems.length} problems</div>
                     </div>
                   </div>
-                  <i className={`fas fa-chevron-${topic.expanded ? 'up' : 'down'} text-slate-400`}></i>
+                  <i className={`fas fa-chevron-${topic.expanded ? 'up' : 'down'} text-slate-400 flex-shrink-0 ml-2`}></i>
                 </CollapsibleTrigger>
                 
                 <CollapsibleContent>
@@ -177,8 +177,8 @@ export function ProblemsSidebar() {
                             : 'hover:bg-slate-50'
                         }`}
                       >
-                        <div className="flex items-center space-x-3 flex-1">
-                          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+                          <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                             problem.completed 
                               ? 'bg-emerald-100 text-emerald-600' 
                               : problem.active
@@ -194,13 +194,13 @@ export function ProblemsSidebar() {
                             } text-xs`}></i>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className={`font-medium text-sm ${
+                            <div className={`font-medium text-xs sm:text-sm truncate ${
                               problem.active ? 'text-blue-900' : 'text-slate-900'
                             }`}>
                               {problem.name}
                             </div>
                             {problem.description && (
-                              <div className="text-xs text-slate-600 truncate">
+                              <div className="text-xs text-slate-600 truncate hidden sm:block">
                                 {problem.description}
                               </div>
                             )}
@@ -208,9 +208,10 @@ export function ProblemsSidebar() {
                         </div>
                         <Badge 
                           variant="secondary" 
-                          className={`text-xs ${getDifficultyColor(problem.difficulty)}`}
+                          className={`text-xs flex-shrink-0 ml-2 ${getDifficultyColor(problem.difficulty)}`}
                         >
-                          {problem.difficulty}
+                          <span className="hidden sm:inline">{problem.difficulty}</span>
+                          <span className="sm:hidden">{problem.difficulty.charAt(0)}</span>
                         </Badge>
                       </div>
                     ))}
