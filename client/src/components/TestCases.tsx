@@ -31,15 +31,15 @@ export function TestCases({ onRunTestCase }: TestCasesProps) {
           <div
             key={index}
             onClick={() => onRunTestCase(s1, s2)}
-            className="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-blue-200"
+            className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-blue-200"
           >
-            <div className="flex items-center space-x-4">
-              <code className="text-sm bg-white px-3 py-1 rounded border font-mono">"{s1}"</code>
-              <i className="fas fa-arrows-alt-h text-slate-400"></i>
-              <code className="text-sm bg-white px-3 py-1 rounded border font-mono">"{s2}"</code>
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap sm:flex-nowrap min-w-0">
+              <code className="text-xs sm:text-sm bg-white px-2 py-1 rounded border font-mono break-all">"{s1}"</code>
+              <i className="fas fa-arrows-alt-h text-slate-400 flex-shrink-0"></i>
+              <code className="text-xs sm:text-sm bg-white px-2 py-1 rounded border font-mono break-all">"{s2}"</code>
             </div>
             <div
-              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium mt-2 sm:mt-0 self-end sm:self-auto flex-shrink-0 ${
                 expected
                   ? 'bg-emerald-100 text-emerald-700'
                   : 'bg-red-100 text-red-700'
