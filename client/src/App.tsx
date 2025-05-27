@@ -11,6 +11,7 @@ import { LinkedListValuesPlayground } from "./pages/linked-list-values";
 import { SumListPlayground } from "./pages/sum-list";
 import { LinkedListFindPlayground } from "./pages/linked-list-find";
 import { GetNodeValuePlayground } from "./pages/get-node-value";
+import { ReverseListPlayground } from "./pages/reverse-list";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/sum-list" component={SumListPlayground} />
         <Route path="/linked-list-find" component={LinkedListFindPlayground} />
         <Route path="/get-node-value" component={GetNodeValuePlayground} />
+        <Route path="/reverse-list" component={ReverseListPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>
