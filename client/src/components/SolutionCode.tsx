@@ -30,7 +30,7 @@ export function SolutionCode() {
       {showSolution && (
         <div className="space-y-6">
           {/* Solution Code */}
-          <div className="bg-slate-900 rounded-lg p-6 overflow-x-auto">
+          <div className="bg-slate-900 rounded-lg p-4 sm:p-6 overflow-x-auto">
             <pre className="text-sm text-slate-300 font-mono">
               <code>
                 <span className="text-blue-400">const</span> <span className="text-yellow-300">anagrams</span> = <span className="text-slate-400">(</span><span className="text-orange-300">s1</span><span className="text-slate-400">,</span> <span className="text-orange-300">s2</span><span className="text-slate-400">) =&gt; {`{`}</span>{'\n'}
@@ -67,7 +67,7 @@ export function SolutionCode() {
           </div>
 
           {/* Algorithm Analysis */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
               <h4 className="font-semibold text-emerald-800 mb-2">Algorithm Steps</h4>
               <ol className="text-sm text-emerald-700 space-y-1 list-decimal list-inside">

@@ -116,9 +116,9 @@ export function ProblemsSidebar() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className="fixed top-4 left-4 z-50 bg-white/90 backdrop-blur-sm">
-          <i className="fas fa-bars mr-2"></i>
-          Problems
+        <Button variant="outline" size="sm" className="flex items-center space-x-2">
+          <i className="fas fa-bars"></i>
+          <span className="hidden sm:inline">Problems</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-80 sm:w-96">

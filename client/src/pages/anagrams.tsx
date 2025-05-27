@@ -203,46 +203,44 @@ export function AnagramsPlayground() {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      {/* Problems Sidebar */}
-      <ProblemsSidebar />
-
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3 ml-20">
+            <div className="flex items-center space-x-3">
+              <ProblemsSidebar />
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-violet-600 rounded-lg flex items-center justify-center">
                 <i className="fas fa-code text-white text-sm"></i>
               </div>
-              <h1 className="text-xl font-semibold text-slate-900">DSA Playground</h1>
-              <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Anagrams</span>
+              <h1 className="text-lg sm:text-xl font-semibold text-slate-900">DSA Playground</h1>
+              <span className="hidden sm:inline text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Anagrams</span>
             </div>
-            <div className="flex items-center space-x-3">
-              <button className="text-slate-600 hover:text-slate-900 transition-colors">
-                <i className="fas fa-bookmark"></i>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <button className="text-slate-600 hover:text-slate-900 transition-colors p-2">
+                <i className="fas fa-bookmark text-sm"></i>
               </button>
-              <button className="text-slate-600 hover:text-slate-900 transition-colors">
-                <i className="fas fa-share-alt"></i>
+              <button className="hidden sm:block text-slate-600 hover:text-slate-900 transition-colors p-2">
+                <i className="fas fa-share-alt text-sm"></i>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Problem Statement */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 mb-8 animate-fade-in">
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-              <i className="fas fa-puzzle-piece text-blue-600 text-lg"></i>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <i className="fas fa-puzzle-piece text-blue-600 text-base sm:text-lg"></i>
             </div>
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-slate-900 mb-3">Anagrams Problem</h2>
-              <p className="text-slate-700 text-lg leading-relaxed mb-4">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">Anagrams Problem</h2>
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-3 sm:mb-4">
                 Write a function that takes two strings and returns <code className="bg-slate-100 px-2 py-1 rounded text-sm font-mono">true</code> if they are anagrams. 
                 Anagrams are strings that contain the same characters, but in any order.
               </p>
-              <div className="flex items-center space-x-6 text-sm">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm">
                 <div className="flex items-center space-x-2 text-emerald-600">
                   <i className="fas fa-clock"></i>
                   <span>Time: O(n + m)</span>
@@ -261,7 +259,7 @@ export function AnagramsPlayground() {
         </div>
 
         {/* Main Content - Full Width */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* Interactive Playground */}
           <PlaygroundComponent
             string1={string1}
@@ -283,8 +281,8 @@ export function AnagramsPlayground() {
             />
           )}
 
-          {/* Test Cases and Solution Code - Side by Side */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          {/* Test Cases and Solution Code - Responsive Grid */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
             <TestCases onRunTestCase={runTestCase} />
             <SolutionCode />
           </div>
