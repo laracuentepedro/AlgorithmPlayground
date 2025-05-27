@@ -19,6 +19,7 @@ import { LongestStreakPlayground } from "./pages/longest-streak";
 import { RemoveNodePlayground } from "./pages/remove-node";
 import { InsertNodePlayground } from "./pages/insert-node";
 import { DepthFirstValuesPlayground } from "./pages/depth-first-values";
+import { BreadthFirstValuesPlayground } from "./pages/breadth-first-values";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/remove-node" component={RemoveNodePlayground} />
         <Route path="/insert-node" component={InsertNodePlayground} />
         <Route path="/depth-first-values" component={DepthFirstValuesPlayground} />
+        <Route path="/breadth-first-values" component={BreadthFirstValuesPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

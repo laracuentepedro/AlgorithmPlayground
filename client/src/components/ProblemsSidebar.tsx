@@ -62,7 +62,8 @@ export function ProblemsSidebar() {
       icon: "fa-sitemap",
       expanded: true,
       problems: [
-        { name: "Depth First Values", difficulty: "Easy", completed: false, active: true, description: "Traverse tree using depth-first search", route: "/depth-first-values" },
+        { name: "Depth First Values", difficulty: "Easy", completed: false, active: false, description: "Traverse tree using depth-first search", route: "/depth-first-values" },
+        { name: "Breadth First Values", difficulty: "Easy", completed: false, active: true, description: "Traverse tree level by level using BFS", route: "/breadth-first-values" },
       ]
     },
     {
