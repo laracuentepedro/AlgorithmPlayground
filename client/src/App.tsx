@@ -17,6 +17,7 @@ import { MergeListsPlayground } from "./pages/merge-lists";
 import { IsUnivalueListPlayground } from "./pages/is-univalue-list";
 import { LongestStreakPlayground } from "./pages/longest-streak";
 import { RemoveNodePlayground } from "./pages/remove-node";
+import { InsertNodePlayground } from "./pages/insert-node";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/is-univalue-list" component={IsUnivalueListPlayground} />
         <Route path="/longest-streak" component={LongestStreakPlayground} />
         <Route path="/remove-node" component={RemoveNodePlayground} />
+        <Route path="/insert-node" component={InsertNodePlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

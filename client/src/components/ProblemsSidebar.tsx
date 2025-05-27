@@ -53,7 +53,8 @@ export function ProblemsSidebar() {
         { name: "Merge Lists", difficulty: "Medium", completed: false, active: false, description: "Merge two sorted lists into one", route: "/merge-lists" },
         { name: "Is Univalue List", difficulty: "Easy", completed: false, active: false, description: "Check if all nodes have same value", route: "/is-univalue-list" },
         { name: "Longest Streak", difficulty: "Easy", completed: false, active: false, description: "Find longest consecutive sequence", route: "/longest-streak" },
-        { name: "Remove Node", difficulty: "Easy", completed: false, active: true, description: "Delete first occurrence of target value", route: "/remove-node" },
+        { name: "Remove Node", difficulty: "Easy", completed: false, active: false, description: "Delete first occurrence of target value", route: "/remove-node" },
+        { name: "Insert Node", difficulty: "Easy", completed: false, active: true, description: "Add new node at specified index", route: "/insert-node" },
       ]
     },
     {
