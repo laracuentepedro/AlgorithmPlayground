@@ -56,71 +56,147 @@ export function DepthFirstValuesPlayground() {
     stack: (string | number)[] = []
   ): string => {
     if (structure.length === 0 || structure[0] === null) {
-      return '<div class="text-center text-slate-500">Empty Tree</div>';
+      return '<div class="text-center text-slate-500 py-8">Empty Tree</div>';
     }
 
     // Helper function to get node display
-    const getNodeDisplay = (index: number, value: string | number | null): string => {
+    const getNodeDisplay = (value: string | number | null, isVisited: boolean, isCurrent: boolean, inStack: boolean): string => {
       if (value === null) return '';
       
-      let nodeClass = 'bg-white border-slate-300';
-      let label = '';
+      let nodeClass = 'bg-white border-slate-300 text-slate-800';
+      let pulseClass = '';
       
-      if (visitedNodes.has(index)) {
-        nodeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
-        label = '<div class="text-xs text-emerald-600 text-center mb-1">visited</div>';
-      } else if (index === currentIndex) {
-        nodeClass = 'bg-blue-100 text-blue-800 border-blue-300';
-        label = '<div class="text-xs text-blue-600 text-center mb-1">current</div>';
-      } else if (stack.includes(value)) {
-        nodeClass = 'bg-yellow-100 text-yellow-800 border-yellow-300';
-        label = '<div class="text-xs text-yellow-600 text-center mb-1">in stack</div>';
+      if (isVisited) {
+        nodeClass = 'bg-emerald-100 text-emerald-800 border-emerald-400';
+      } else if (isCurrent) {
+        nodeClass = 'bg-blue-100 text-blue-800 border-blue-400';
+        pulseClass = ' animate-pulse';
+      } else if (inStack) {
+        nodeClass = 'bg-yellow-100 text-yellow-800 border-yellow-400';
       }
       
-      return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-3 py-2 rounded-lg border-2 ${nodeClass} font-mono font-semibold text-sm">${value}</span></div>`;
+      return `<div class="relative inline-flex items-center justify-center w-10 h-10 rounded-full border-2 ${nodeClass} font-mono font-bold text-sm${pulseClass} shadow-sm">${value}</div>`;
     };
 
-    // Create a simple tree visualization for small trees
-    if (structure.length <= 7) {
-      const nodes = [];
-      
-      // Level 0 (root)
-      if (structure[0] !== null) {
-        nodes.push(`<div class="flex justify-center mb-4">${getNodeDisplay(0, structure[0])}</div>`);
+    // Build the tree structure with proper positioning
+    const buildTreeHTML = (): string => {
+      if (structure.length <= 15) {
+        // For trees with 4 levels or less, use visual tree layout
+        const levels = [];
+        let nodeIndex = 0;
+        
+        // Level 0 (root)
+        if (structure[0] !== null) {
+          const isVisited = visitedNodes.has(0);
+          const isCurrent = currentIndex === 0;
+          const inStack = stack.includes(structure[0]);
+          levels.push(`
+            <div class="flex justify-center mb-8">
+              ${getNodeDisplay(structure[0], isVisited, isCurrent, inStack)}
+            </div>
+          `);
+        }
+        
+        // Level 1
+        if (structure.length > 1) {
+          const level1Nodes = [];
+          for (let i = 1; i <= 2; i++) {
+            if (i < structure.length && structure[i] !== null) {
+              const isVisited = visitedNodes.has(i);
+              const isCurrent = currentIndex === i;
+              const inStack = stack.includes(structure[i]);
+              level1Nodes.push(getNodeDisplay(structure[i], isVisited, isCurrent, inStack));
+            } else {
+              level1Nodes.push('<div class="w-10 h-10"></div>');
+            }
+          }
+          
+          if (level1Nodes.some(node => !node.includes('w-10 h-10'))) {
+            levels.push(`
+              <div class="flex justify-center items-center space-x-16 mb-8 relative">
+                <!-- Connection lines -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" style="top: -20px;">
+                  <line x1="50%" y1="0" x2="35%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                  <line x1="50%" y1="0" x2="65%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                </svg>
+                ${level1Nodes.join('')}
+              </div>
+            `);
+          }
+        }
+        
+        // Level 2
+        if (structure.length > 3) {
+          const level2Nodes = [];
+          for (let i = 3; i <= 6; i++) {
+            if (i < structure.length && structure[i] !== null) {
+              const isVisited = visitedNodes.has(i);
+              const isCurrent = currentIndex === i;
+              const inStack = stack.includes(structure[i]);
+              level2Nodes.push(getNodeDisplay(structure[i], isVisited, isCurrent, inStack));
+            } else {
+              level2Nodes.push('<div class="w-10 h-10"></div>');
+            }
+          }
+          
+          if (level2Nodes.some(node => !node.includes('w-10 h-10'))) {
+            levels.push(`
+              <div class="flex justify-center items-center space-x-8 mb-8 relative">
+                <!-- Connection lines -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" style="top: -20px;">
+                  <line x1="25%" y1="0" x2="12.5%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                  <line x1="25%" y1="0" x2="37.5%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                  <line x1="75%" y1="0" x2="62.5%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                  <line x1="75%" y1="0" x2="87.5%" y2="30" stroke="#cbd5e1" stroke-width="2"/>
+                </svg>
+                ${level2Nodes.join('')}
+              </div>
+            `);
+          }
+        }
+        
+        // Level 3
+        if (structure.length > 7) {
+          const level3Nodes = [];
+          for (let i = 7; i <= 14; i++) {
+            if (i < structure.length && structure[i] !== null) {
+              const isVisited = visitedNodes.has(i);
+              const isCurrent = currentIndex === i;
+              const inStack = stack.includes(structure[i]);
+              level3Nodes.push(getNodeDisplay(structure[i], isVisited, isCurrent, inStack));
+            } else {
+              level3Nodes.push('<div class="w-10 h-10"></div>');
+            }
+          }
+          
+          if (level3Nodes.some(node => !node.includes('w-10 h-10'))) {
+            levels.push(`
+              <div class="flex justify-center items-center space-x-4 mb-4">
+                ${level3Nodes.join('')}
+              </div>
+            `);
+          }
+        }
+        
+        return `<div class="py-6">${levels.join('')}</div>`;
+      } else {
+        // For larger trees, use a compact horizontal layout
+        const nodesList = structure
+          .map((val, idx) => {
+            if (val === null) return '';
+            const isVisited = visitedNodes.has(idx);
+            const isCurrent = currentIndex === idx;
+            const inStack = stack.includes(val);
+            return getNodeDisplay(val, isVisited, isCurrent, inStack);
+          })
+          .filter(node => node !== '')
+          .join('<span class="mx-1 text-slate-400">→</span>');
+        
+        return `<div class="flex flex-wrap justify-center items-center gap-1 py-6">${nodesList}</div>`;
       }
-      
-      // Level 1
-      const level1 = [];
-      if (structure.length > 1 && structure[1] !== null) level1.push(getNodeDisplay(1, structure[1]));
-      else level1.push('<div class="w-16"></div>');
-      if (structure.length > 2 && structure[2] !== null) level1.push(getNodeDisplay(2, structure[2]));
-      else level1.push('<div class="w-16"></div>');
-      
-      if (level1.some(node => node !== '<div class="w-16"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-8 mb-4">${level1.join('')}</div>`);
-      }
-      
-      // Level 2
-      const level2 = [];
-      for (let i = 3; i < 7 && i < structure.length; i++) {
-        if (structure[i] !== null) level2.push(getNodeDisplay(i, structure[i]));
-        else level2.push('<div class="w-12"></div>');
-      }
-      
-      if (level2.some(node => node !== '<div class="w-12"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-4 mb-4">${level2.join('')}</div>`);
-      }
-      
-      return `<div class="tree-visualization">${nodes.join('')}</div>`;
-    }
-    
-    // For larger trees, show a simplified list view
-    const nodesList = structure
-      .map((val, idx) => val !== null ? getNodeDisplay(idx, val) : '')
-      .filter(node => node !== '')
-      .join(' ');
-    
-    return `<div class="flex flex-wrap justify-center gap-2">${nodesList}</div>`;
+    };
+
+    return buildTreeHTML();
   };
 
   const buildTreeFromArray = (arr: (string | number | null)[]): TreeNode | null => {
@@ -565,7 +641,7 @@ export function DepthFirstValuesPlayground() {
 
             <div className="mb-6">
               <Label htmlFor="inputStructure" className="block text-sm font-medium text-slate-700 mb-2">
-                Binary Tree Structure (level-order, use "null" for empty nodes)
+                Binary Tree Structure
               </Label>
               <Input
                 id="inputStructure"
@@ -575,8 +651,20 @@ export function DepthFirstValuesPlayground() {
                 className="font-mono"
                 placeholder="e.g. a,b,c,d,e,null,f"
               />
-              <div className="mt-2 text-xs text-slate-500">
-                Enter nodes in level-order: root, then left-to-right for each level. Use "null" for missing nodes.
+              <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="text-xs font-medium text-blue-800 mb-2">💡 How to build your tree:</div>
+                <div className="text-xs text-blue-700 space-y-1">
+                  <div>• Enter nodes level by level, left to right</div>
+                  <div>• Use "null" for missing nodes</div>
+                  <div>• Example: "a,b,c,d,e,null,f" creates:</div>
+                </div>
+                <div className="mt-2 font-mono text-xs text-blue-800 bg-white p-2 rounded border">
+                  <div className="text-center">a</div>
+                  <div className="text-center">/ \</div>
+                  <div className="text-center">b   c</div>
+                  <div className="text-center">/ \   \</div>
+                  <div className="text-center">d   e   f</div>
+                </div>
               </div>
             </div>
 
