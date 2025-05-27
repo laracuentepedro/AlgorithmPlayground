@@ -80,35 +80,35 @@ export function DepthFirstValuesPlayground() {
       return `<div class="inline-flex flex-col items-center">${label}<span class="inline-flex items-center px-4 py-3 rounded-xl border-2 ${nodeClass} font-mono font-semibold text-lg">${value}</span></div>`;
     };
 
-    // Create simple tree visualization
-    if (structure.length <= 7) {
+    // Create hierarchical tree visualization for any depth
+    const maxDepth = Math.floor(Math.log2(structure.length)) + 1;
+    
+    if (maxDepth <= 5) { // Handle trees up to 5 levels properly
       const nodes = [];
       
-      // Level 0 (root)
-      if (structure[0] !== null) {
-        nodes.push(`<div class="flex justify-center mb-6">${getNodeDisplay(0, structure[0])}</div>`);
-      }
-      
-      // Level 1
-      const level1 = [];
-      if (structure.length > 1 && structure[1] !== null) level1.push(getNodeDisplay(1, structure[1]));
-      else level1.push('<div class="w-20"></div>');
-      if (structure.length > 2 && structure[2] !== null) level1.push(getNodeDisplay(2, structure[2]));
-      else level1.push('<div class="w-20"></div>');
-      
-      if (level1.some(node => node !== '<div class="w-20"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-16 mb-6">${level1.join('')}</div>`);
-      }
-      
-      // Level 2
-      const level2 = [];
-      for (let i = 3; i < 7 && i < structure.length; i++) {
-        if (structure[i] !== null) level2.push(getNodeDisplay(i, structure[i]));
-        else level2.push('<div class="w-16"></div>');
-      }
-      
-      if (level2.some(node => node !== '<div class="w-16"></div>')) {
-        nodes.push(`<div class="flex justify-center space-x-8 mb-6">${level2.join('')}</div>`);
+      for (let level = 0; level < maxDepth; level++) {
+        const levelNodes = [];
+        const startIndex = Math.pow(2, level) - 1;
+        const endIndex = Math.min(Math.pow(2, level + 1) - 1, structure.length);
+        
+        // Calculate spacing based on level
+        const baseSpacing = Math.pow(2, maxDepth - level - 1) * 4;
+        const spacing = Math.max(baseSpacing, 4);
+        
+        for (let i = startIndex; i < endIndex && i < structure.length; i++) {
+          if (structure[i] !== null) {
+            levelNodes.push(getNodeDisplay(i, structure[i]));
+          } else {
+            levelNodes.push(`<div class="w-20"></div>`);
+          }
+        }
+        
+        // Only render level if it has at least one non-null node
+        if (levelNodes.some(node => !node.includes('w-20'))) {
+          const levelClass = level === 0 ? 'justify-center' : 'justify-center';
+          const marginClass = level < maxDepth - 1 ? 'mb-6' : 'mb-2';
+          nodes.push(`<div class="flex ${levelClass} space-x-${Math.min(spacing, 16)} ${marginClass}">${levelNodes.join('')}</div>`);
+        }
       }
       
       return `<div class="tree-visualization py-4">${nodes.join('')}</div>`;
