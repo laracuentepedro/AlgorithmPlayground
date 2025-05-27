@@ -7,6 +7,7 @@ import { IntersectionPlayground } from "./pages/intersection";
 import { ExclusiveItemsPlayground } from "./pages/exclusive-items";
 import { AllUniquePlayground } from "./pages/all-unique";
 import { IntersectionWithDupesPlayground } from "./pages/intersection-with-dupes";
+import { LinkedListValuesPlayground } from "./pages/linked-list-values";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/exclusive-items" component={ExclusiveItemsPlayground} />
         <Route path="/all-unique" component={AllUniquePlayground} />
         <Route path="/intersection-with-dupes" component={IntersectionWithDupesPlayground} />
+        <Route path="/linked-list-values" component={LinkedListValuesPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

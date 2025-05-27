@@ -36,20 +36,15 @@ export function ProblemsSidebar() {
         { name: "Intersection", difficulty: "Easy", completed: false, active: false, description: "Find common elements between two arrays", route: "/intersection" },
         { name: "Exclusive Items", difficulty: "Easy", completed: false, active: false, description: "Find elements in either array but not both", route: "/exclusive-items" },
         { name: "All Unique", difficulty: "Easy", completed: false, active: false, description: "Check if all array elements are unique", route: "/all-unique" },
-        { name: "Intersection with Dupes", difficulty: "Easy", completed: false, active: true, description: "Find common elements preserving frequencies", route: "/intersection-with-dupes" },
-        { name: "Group Anagrams", difficulty: "Medium", completed: false, active: false, description: "Group strings by anagram patterns" },
-        { name: "Valid Sudoku", difficulty: "Medium", completed: false, active: false, description: "Validate sudoku board state" },
+        { name: "Intersection with Dupes", difficulty: "Easy", completed: false, active: false, description: "Find common elements preserving frequencies", route: "/intersection-with-dupes" },
       ]
     },
     {
       name: "Linked Lists",
       icon: "fa-link",
-      expanded: false,
+      expanded: true,
       problems: [
-        { name: "Reverse Linked List", difficulty: "Easy", completed: false, active: false },
-        { name: "Merge Two Sorted Lists", difficulty: "Easy", completed: false, active: false },
-        { name: "Linked List Cycle", difficulty: "Easy", completed: false, active: false },
-        { name: "Remove Nth Node", difficulty: "Medium", completed: false, active: false },
+        { name: "Linked List Values", difficulty: "Easy", completed: false, active: true, description: "Extract all values from a linked list", route: "/linked-list-values" },
       ]
     },
     {
