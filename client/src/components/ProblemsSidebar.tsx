@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useLocation } from "wouter";
 
 interface Problem {
   name: string;
@@ -10,6 +11,7 @@ interface Problem {
   completed: boolean;
   active: boolean;
   description?: string;
+  route?: string;
 }
 
 interface ProblemTopic {
@@ -20,13 +22,15 @@ interface ProblemTopic {
 }
 
 export function ProblemsSidebar() {
+  const [location, setLocation] = useLocation();
   const [topics, setTopics] = useState<ProblemTopic[]>([
     {
       name: "Hash Tables & Arrays",
       icon: "fa-hashtag",
       expanded: true,
       problems: [
-        { name: "Anagrams", difficulty: "Easy", completed: false, active: true, description: "Check if two strings are anagrams" },
+        { name: "Anagrams", difficulty: "Easy", completed: false, active: false, description: "Check if two strings are anagrams", route: "/anagrams" },
+        { name: "Most Frequent Character", difficulty: "Easy", completed: false, active: true, description: "Find the most frequent character in a string", route: "/most-frequent-char" },
         { name: "Two Sum", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that add to target" },
         { name: "Group Anagrams", difficulty: "Medium", completed: false, active: false, description: "Group strings by anagram patterns" },
         { name: "Valid Sudoku", difficulty: "Medium", completed: false, active: false, description: "Validate sudoku board state" },
@@ -171,8 +175,13 @@ export function ProblemsSidebar() {
                     {topic.problems.map((problem, problemIndex) => (
                       <div
                         key={problemIndex}
+                        onClick={() => {
+                          if (problem.route) {
+                            setLocation(problem.route);
+                          }
+                        }}
                         className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
-                          problem.active
+                          location === problem.route
                             ? 'bg-blue-100 border border-blue-200'
                             : 'hover:bg-slate-50'
                         }`}
