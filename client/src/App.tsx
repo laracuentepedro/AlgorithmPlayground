@@ -21,6 +21,7 @@ import { InsertNodePlayground } from "./pages/insert-node";
 import { DepthFirstValuesPlayground } from "./pages/depth-first-values";
 import { BreadthFirstValuesPlayground } from "./pages/breadth-first-values";
 import { TreeSumPlayground } from "./pages/tree-sum";
+import { TreeIncludesPlayground } from "./pages/tree-includes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "./pages/not-found";
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/depth-first-values" component={DepthFirstValuesPlayground} />
         <Route path="/breadth-first-values" component={BreadthFirstValuesPlayground} />
         <Route path="/tree-sum" component={TreeSumPlayground} />
+        <Route path="/tree-includes" component={TreeIncludesPlayground} />
         <Route path="/" component={AnagramsPlayground} />
         <Route component={NotFound} />
       </Switch>

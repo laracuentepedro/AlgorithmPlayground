@@ -64,7 +64,8 @@ export function ProblemsSidebar() {
       problems: [
         { name: "Depth First Values", difficulty: "Easy", completed: false, active: false, description: "Traverse tree using depth-first search", route: "/depth-first-values" },
         { name: "Breadth First Values", difficulty: "Easy", completed: false, active: false, description: "Traverse tree level by level using BFS", route: "/breadth-first-values" },
-        { name: "Tree Sum", difficulty: "Easy", completed: false, active: true, description: "Calculate sum of all values in tree", route: "/tree-sum" },
+        { name: "Tree Sum", difficulty: "Easy", completed: false, active: false, description: "Calculate sum of all values in tree", route: "/tree-sum" },
+        { name: "Tree Includes", difficulty: "Easy", completed: false, active: true, description: "Search for a value in binary tree", route: "/tree-includes" },
       ]
     },
     {
