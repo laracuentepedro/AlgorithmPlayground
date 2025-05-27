@@ -66,7 +66,8 @@ export function ProblemsSidebar() {
         { name: "Breadth First Values", difficulty: "Easy", completed: false, active: false, description: "Traverse tree level by level using BFS", route: "/breadth-first-values" },
         { name: "Tree Sum", difficulty: "Easy", completed: false, active: false, description: "Calculate sum of all values in tree", route: "/tree-sum" },
         { name: "Tree Includes", difficulty: "Easy", completed: false, active: false, description: "Search for a value in binary tree", route: "/tree-includes" },
-        { name: "Tree Min Value", difficulty: "Easy", completed: false, active: true, description: "Find minimum value in binary tree", route: "/tree-min-value" },
+        { name: "Tree Min Value", difficulty: "Easy", completed: false, active: false, description: "Find minimum value in binary tree", route: "/tree-min-value" },
+        { name: "Max Path Sum", difficulty: "Medium", completed: false, active: true, description: "Find maximum root-to-leaf path sum", route: "/max-path-sum" },
       ]
     },
     {
