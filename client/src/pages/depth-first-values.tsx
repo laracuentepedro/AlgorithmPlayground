@@ -304,18 +304,27 @@ export function DepthFirstValuesPlayground() {
       return { result: [], steps };
     }
 
+    // Create a mapping from node values to their indices in the structure array
+    const nodeValueToIndex = new Map<string | number, number>();
+    structure.forEach((val, idx) => {
+      if (val !== null) {
+        nodeValueToIndex.set(val, idx);
+      }
+    });
+
+    const visitedNodes = new Set<number>();
+    let finalResult: (string | number)[] = [];
+
     steps.push({
       step: 1,
       description: "Starting recursive DFS traversal",
       details: "Begin depth-first search using recursive approach",
       action: 'initialize',
       result: [],
-      treeVisualization: createTreeVisualization(structure, 0),
+      treeVisualization: createTreeVisualization(structure, 0, visitedNodes),
       approach: 'recursive',
       recursionDepth: 0
     });
-
-    let finalResult: (string | number)[] = [];
 
     const dfsRecursive = (node: TreeNode | null, depth: number): (string | number)[] => {
       if (node === null) {
@@ -324,13 +333,15 @@ export function DepthFirstValuesPlayground() {
           description: `Base case: null node`,
           details: `Recursion depth ${depth}: Reached null node, return empty array`,
           action: 'base_case',
-          result: finalResult,
-          treeVisualization: createTreeVisualization(structure),
+          result: [...finalResult],
+          treeVisualization: createTreeVisualization(structure, -1, visitedNodes),
           approach: 'recursive',
           recursionDepth: depth
         });
         return [];
       }
+
+      const currentIndex = nodeValueToIndex.get(node.val) || 0;
 
       steps.push({
         step: steps.length + 1,
@@ -338,8 +349,8 @@ export function DepthFirstValuesPlayground() {
         details: `Recursion depth ${depth}: Processing node "${node.val}"`,
         action: 'recursive_call',
         currentNode: node.val,
-        result: finalResult,
-        treeVisualization: createTreeVisualization(structure),
+        result: [...finalResult],
+        treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
         approach: 'recursive',
         recursionDepth: depth
       });
@@ -350,8 +361,24 @@ export function DepthFirstValuesPlayground() {
         details: `Recursion depth ${depth}: Add current node value to result`,
         action: 'visit_node',
         currentNode: node.val,
-        result: finalResult,
-        treeVisualization: createTreeVisualization(structure),
+        result: [...finalResult],
+        treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
+        approach: 'recursive',
+        recursionDepth: depth
+      });
+
+      // Add current node to final result and mark as visited
+      finalResult.push(node.val);
+      visitedNodes.add(currentIndex);
+
+      steps.push({
+        step: steps.length + 1,
+        description: `Add "${node.val}" to result`,
+        details: `Recursion depth ${depth}: Value added to result array. Result so far: [${finalResult.join(', ')}]`,
+        action: 'add_to_result',
+        currentNode: node.val,
+        result: [...finalResult],
+        treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
         approach: 'recursive',
         recursionDepth: depth
       });
@@ -371,10 +398,10 @@ export function DepthFirstValuesPlayground() {
         details: `Recursion depth ${depth}: [${node.val}] + [${leftValues.join(', ')}] + [${rightValues.join(', ')}] = [${result.join(', ')}]`,
         action: 'combine_results',
         currentNode: node.val,
-        result: result,
+        result: [...finalResult],
         leftSubtree: leftValues,
         rightSubtree: rightValues,
-        treeVisualization: createTreeVisualization(structure),
+        treeVisualization: createTreeVisualization(structure, currentIndex, visitedNodes),
         approach: 'recursive',
         recursionDepth: depth
       });
@@ -382,7 +409,7 @@ export function DepthFirstValuesPlayground() {
       return result;
     };
 
-    finalResult = dfsRecursive(root, 0);
+    const algorithmResult = dfsRecursive(root, 0);
 
     steps.push({
       step: steps.length + 1,
@@ -390,7 +417,7 @@ export function DepthFirstValuesPlayground() {
       details: `All recursive calls finished. Final result: [${finalResult.join(', ')}]`,
       action: 'complete',
       result: finalResult,
-      treeVisualization: createTreeVisualization(structure),
+      treeVisualization: createTreeVisualization(structure, -1, visitedNodes),
       approach: 'recursive'
     });
 
