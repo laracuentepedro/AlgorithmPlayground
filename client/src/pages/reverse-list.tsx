@@ -581,7 +581,7 @@ export function ReverseListPlayground() {
               </div>
 
               {/* Original vs Current Visualization */}
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="space-y-6 mb-6">
                 <div>
                   <h4 className="text-sm font-medium text-slate-700 mb-3">Original List</h4>
                   <div 
