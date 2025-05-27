@@ -32,7 +32,8 @@ export function ProblemsSidebar() {
         { name: "Anagrams", difficulty: "Easy", completed: false, active: false, description: "Check if two strings are anagrams", route: "/anagrams" },
         { name: "Most Frequent Character", difficulty: "Easy", completed: false, active: false, description: "Find the most frequent character in a string", route: "/most-frequent-char" },
         { name: "Pair Sum", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that add to target", route: "/pair-sum" },
-        { name: "Pair Product", difficulty: "Easy", completed: false, active: true, description: "Find two numbers that multiply to target", route: "/pair-product" },
+        { name: "Pair Product", difficulty: "Easy", completed: false, active: false, description: "Find two numbers that multiply to target", route: "/pair-product" },
+        { name: "Intersection", difficulty: "Easy", completed: false, active: true, description: "Find common elements between two arrays", route: "/intersection" },
         { name: "Group Anagrams", difficulty: "Medium", completed: false, active: false, description: "Group strings by anagram patterns" },
         { name: "Valid Sudoku", difficulty: "Medium", completed: false, active: false, description: "Validate sudoku board state" },
       ]
